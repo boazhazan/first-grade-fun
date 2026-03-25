@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#1a1a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="לומד וגדל">
+<link rel="manifest" href="manifest.json">
+<title>לומד וגדל! 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--acc:#f7c948;--a2:#ff6b6b;--a3:#4ecdc4;--a4:#a29bfe;--txt:#fff;--mut:#aaa;--grn:#55efc4;--red:#ff7675;--r:18px;--sh:0 8px 32px rgba(0,0,0,.4)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;direction:rtl;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,.5) 0%,transparent 100%),radial-gradient(1px 1px at 30% 50%,rgba(255,255,255,.3) 0%,transparent 100%),radial-gradient(1px 1px at 60% 15%,rgba(255,255,255,.4) 0%,transparent 100%),radial-gradient(1px 1px at 80% 70%,rgba(255,255,255,.3) 0%,transparent 100%),radial-gradient(2px 2px at 20% 85%,rgba(247,201,72,.35) 0%,transparent 100%),radial-gradient(2px 2px at 85% 20%,rgba(78,205,196,.25) 0%,transparent 100%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:500px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column;gap:10px}
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;background:var(--card);border-radius:var(--r);border:1px solid rgba(247,201,72,.2);box-shadow:var(--sh)}
+.hdr-name{font-size:1rem;font-weight:700;color:var(--acc)}
+.hdr-name span{font-size:.72rem;color:var(--mut);display:block;font-weight:400}
+.score-box{text-align:center}.score-num{font-size:1.9rem;font-weight:900;color:var(--acc);line-height:1}.score-lbl{font-size:.6rem;color:var(--mut)}
+/* PROGRESS */
+.prog-bar{height:13px;background:var(--card);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--a3),var(--acc));border-radius:999px;transition:width .5s cubic-bezier(.34,1.56,.64,1);position:relative;min-width:4px}
+.prog-fill::after{content:'⭐';position:absolute;right:-7px;top:50%;transform:translateY(-50%);font-size:16px}
+.prog-txt{text-align:center;font-size:.7rem;color:var(--mut);margin-top:3px}
+/* MEDALS */
+.medals{display:flex;gap:5px;justify-content:center}.medal{font-size:1.3rem;filter:grayscale(1) opacity(.3);transition:all .3s}.medal.on{filter:none;animation:pop .5s ease}
+/* SCREENS */
+.scr{display:none;flex-direction:column;gap:12px;flex:1}.scr.active{display:flex}
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--card2),var(--card));border-radius:var(--r);padding:22px 18px;text-align:center;border:1px solid rgba(247,201,72,.2);box-shadow:var(--sh)}
+.hero-emoji{font-size:3rem;animation:bounce 2s infinite;display:block}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero h1{font-size:1.6rem;font-weight:900;color:var(--acc);margin:6px 0 3px}.hero p{color:var(--mut);font-size:.85rem}
+/* NAME INPUT */
+.name-inp{width:100%;background:var(--bg);border:2px solid rgba(247,201,72,.3);border-radius:12px;color:var(--txt);font-family:'Heebo',sans-serif;font-size:1.1rem;padding:12px 16px;text-align:center;direction:rtl}
+.name-inp:focus{outline:none;border-color:var(--acc)}
+/* GRIDS */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cat-btn{background:var(--card);border:2px solid transparent;border-radius:var(--r);padding:16px 10px;cursor:pointer;text-align:center;transition:all .2s;box-shadow:var(--sh);color:var(--txt);font-family:'Heebo',sans-serif}
+.cat-btn:active{transform:scale(.95)}.c-icon{font-size:2rem;margin-bottom:5px}.c-name{font-size:.9rem;font-weight:700}.c-cnt{font-size:.68rem;color:var(--mut);margin-top:3px}
+.topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.topic-btn{background:var(--card);border:2px solid rgba(255,255,255,.06);border-radius:var(--r);padding:14px 8px;cursor:pointer;text-align:center;transition:all .2s;box-shadow:var(--sh);color:var(--txt);font-family:'Heebo',sans-serif}
+.topic-btn:active{transform:scale(.95)}.t-icon{font-size:1.9rem;margin-bottom:4px}.t-name{font-size:.88rem;font-weight:700}.t-sub{font-size:.65rem;color:var(--mut);margin-top:2px}
+/* MISC */
+.back-btn{background:var(--card);border:1px solid rgba(255,255,255,.1);color:var(--txt);font-family:'Heebo',sans-serif;font-size:.88rem;padding:7px 14px;border-radius:11px;cursor:pointer;width:fit-content}
+.badge{padding:5px 11px;border-radius:999px;font-size:.78rem;font-weight:700}
+.b-math{background:rgba(78,205,196,.2);color:var(--a3)}.b-read{background:rgba(162,155,254,.2);color:var(--a4)}.b-story{background:rgba(255,107,107,.2);color:var(--a2)}
+/* Q CARD */
+.q-card{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid rgba(255,255,255,.07);box-shadow:var(--sh)}.q-num{font-size:.72rem;color:var(--mut);margin-bottom:5px}.q-text{font-size:1.1rem;font-weight:700;line-height:1.5}
+/* MC */
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mc-btn{background:var(--card);border:2px solid rgba(255,255,255,.07);border-radius:var(--r);padding:15px 8px;cursor:pointer;font-family:'Heebo',sans-serif;font-size:1.3rem;font-weight:700;color:var(--txt);transition:all .15s;box-shadow:var(--sh)}
+.mc-btn:active:not(:disabled){transform:scale(.95)}.mc-btn.correct{background:rgba(85,239,196,.15);border-color:var(--grn);color:var(--grn);animation:pop .4s ease}.mc-btn.wrong{background:rgba(255,118,117,.15);border-color:var(--red);color:var(--red);animation:shake .4s ease}
+/* STORY */
+.story-card{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid rgba(162,155,254,.2);box-shadow:var(--sh);overflow-y:auto;max-height:55vh}
+.story-art{font-size:3.5rem;text-align:center;margin-bottom:10px;line-height:1.2}.story-title{font-size:1.25rem;font-weight:900;color:var(--a4);text-align:center;margin-bottom:14px}.story-body{font-size:1.3rem;line-height:2.4;color:var(--txt);direction:rtl}.story-body p{margin-bottom:10px}
+/* OPEN ANS */
+.ans-inp{width:100%;background:var(--bg);border:2px solid rgba(255,255,255,.13);border-radius:12px;color:var(--txt);font-family:'Heebo',sans-serif;font-size:1.1rem;padding:11px 14px;text-align:right;direction:rtl;resize:none;min-height:55px}.ans-inp:focus{outline:none;border-color:var(--a4)}
+/* KBD TOGGLE */
+.kbd-toggle{display:flex;gap:8px;justify-content:center}
+.kbd-tab{background:var(--card);border:1px solid rgba(255,255,255,.1);color:var(--mut);font-family:'Heebo',sans-serif;font-size:.8rem;padding:6px 14px;border-radius:999px;cursor:pointer;transition:all .2s}.kbd-tab.active{background:var(--a4);color:#0f0f1a;font-weight:700;border-color:var(--a4)}
+/* HEB KBD */
+.heb-kbd{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.hk{background:var(--card);border:1px solid rgba(255,255,255,.09);color:var(--txt);font-family:'Heebo',sans-serif;font-size:1.05rem;font-weight:700;padding:9px 4px;border-radius:8px;cursor:pointer;transition:all .15s;text-align:center}.hk:active{background:var(--card2);transform:scale(.92)}.hk.sp{grid-column:span 2;font-size:.78rem;color:var(--mut)}.hk.del{background:rgba(255,118,117,.12);border-color:var(--red);color:var(--red)}.hk.num{background:rgba(78,205,196,.09);color:var(--a3)}.hk.fin{background:rgba(162,155,254,.12);border-color:rgba(162,155,254,.3)}
+/* FB */
+.fb{text-align:center;padding:9px;border-radius:11px;font-size:.9rem;font-weight:700;min-height:42px;display:flex;align-items:center;justify-content:center;gap:5px}.fb.ok{background:rgba(85,239,196,.15);color:var(--grn)}.fb.err{background:rgba(255,118,117,.15);color:var(--red)}.fb.hint{background:rgba(247,201,72,.1);color:var(--acc);font-size:.82rem}
+/* BTNS */
+.sub-btn{background:linear-gradient(135deg,var(--a4),var(--a3));border:none;border-radius:var(--r);padding:13px;cursor:pointer;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;color:#0f0f1a;width:100%;transition:all .2s}.sub-btn:active{transform:scale(.97)}
+.next-btn{background:linear-gradient(135deg,var(--a3),var(--acc));border:none;border-radius:var(--r);padding:13px;cursor:pointer;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;color:#0f0f1a;width:100%;transition:all .2s}.next-btn:active{transform:scale(.97)}
+/* STREAK */
+.streak{display:flex;gap:5px;justify-content:center}.sd{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.09);transition:all .3s}.sd.on{background:var(--acc);box-shadow:0 0 7px var(--acc);animation:pop .3s ease}
+/* Q PROGRESS */
+.qprog{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}.qd{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.09);transition:all .3s}.qd.done{background:var(--grn)}.qd.cur{background:var(--acc);box-shadow:0 0 5px var(--acc)}
+/* PRIZE */
+.prize-wrap{text-align:center;padding:14px}.prize-spin{font-size:2.8rem;animation:spin 1s ease infinite alternate}
+@keyframes spin{from{transform:rotate(-10deg) scale(1)}to{transform:rotate(10deg) scale(1.1)}}
+.prize-card{background:linear-gradient(135deg,#f7c948,#ff6b6b);border-radius:var(--r);padding:22px 18px;margin:10px 0;box-shadow:0 8px 40px rgba(247,201,72,.4)}.prize-card h2{font-size:1.2rem;font-weight:900;color:#0f0f1a;margin-bottom:5px}.prize-name{font-size:1.6rem;font-weight:900;color:#0f0f1a}
+/* ADMIN */
+.admin-area{margin-top:auto;padding-top:10px;border-top:1px solid rgba(255,255,255,.04)}
+.admin-toggle{background:none;border:1px solid rgba(255,255,255,.09);color:var(--mut);font-family:'Heebo',sans-serif;font-size:.7rem;padding:5px 10px;border-radius:999px;cursor:pointer;width:100%}
+.admin-panel{display:none;margin-top:7px;background:var(--card);border-radius:11px;padding:11px;gap:8px;flex-direction:column;border:1px solid rgba(255,255,255,.07)}.admin-panel.open{display:flex}
+.adm-inp{background:var(--bg);border:1px solid rgba(255,255,255,.13);color:var(--txt);font-family:'Heebo',sans-serif;font-size:1rem;padding:8px 12px;border-radius:9px;text-align:center;letter-spacing:4px;direction:ltr;width:100%}
+.adm-btn{background:rgba(255,118,117,.18);border:1px solid var(--red);color:var(--red);font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;padding:8px;border-radius:9px;cursor:pointer}
+.adm-msg{font-size:.75rem;text-align:center;padding:5px;border-radius:7px}.adm-msg.ok{background:rgba(85,239,196,.15);color:var(--grn)}.adm-msg.err{background:rgba(255,118,117,.15);color:var(--red)}
+/* DONE */
+.done-card{background:var(--card);border-radius:var(--r);padding:22px 18px;text-align:center;border:1px solid rgba(247,201,72,.25);box-shadow:var(--sh)}.done-card h2{font-size:1.2rem;font-weight:900;color:var(--acc);margin:8px 0 6px}.done-card p{color:var(--mut);font-size:.85rem;line-height:1.6}
+.sec-lbl{font-size:.75rem;font-weight:700;color:var(--mut);text-align:center;letter-spacing:2px}
+.pts-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:var(--acc);color:#0f0f1a;font-size:1.7rem;font-weight:900;padding:13px 26px;border-radius:var(--r);z-index:999;pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1)}.pts-pop.show{transform:translate(-50%,-220%) scale(1)}
+.math-eq{font-size:2.2rem;font-weight:900;text-align:center;padding:16px;direction:ltr;unicode-bidi:embed;white-space:pre-line}
+.parent-tab{flex:1;background:none;border:none;color:var(--muted);font-family:'Heebo',sans-serif;font-size:.78rem;font-weight:700;padding:7px 4px;border-radius:8px;cursor:pointer;transition:all .2s}
+.parent-tab.active{background:var(--card2);color:var(--acc)}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-name" id="hdrName">לומד וגדל 🌟<span>בחר שם להתחיל</span></div>
+  <div class="score-box"><div class="score-num" id="scoreNum">0</div><div class="score-lbl">נקודות</div></div>
+</div>
+<div><div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div><div class="prog-txt" id="progTxt"></div></div>
+<div class="medals" id="medalsRow"></div>
+
+<!-- ══ WELCOME ══ -->
+<div class="scr active" id="welcomeScr">
+  <div class="hero">
+    <span style="font-size:3.5rem;display:block;animation:bounce 2s infinite">🌟</span>
+    <h1>ברוכים הבאים!</h1>
+    <p>משחק למידה מהנה ומאתגר</p>
+  </div>
+  <div style="background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:10px">
+    <div style="font-size:.85rem;color:var(--mut);text-align:center">מה השם שלך?</div>
+    <input type="text" id="nameInp" class="name-inp" placeholder="כתוב את שמך כאן..." maxlength="20">
+    <button class="sub-btn" onclick="startWithName()">בואו נתחיל! ➜</button>
+    <div style="font-size:.72rem;color:var(--mut);text-align:center">שיחקת כאן לפני? כתוב את אותו שם ✨</div>
+  </div>
+</div>
+
+<!-- ══ HOME ══ -->
+<div class="scr" id="homeScr">
+  <div class="hero">
+    <span class="hero-emoji" id="heroEmoji">🦸‍♂️</span>
+    <h1>שלום, <span id="pName">חבר</span>! 👋</h1>
+    <p>בחר קטגוריה ונושא — בהצלחה!</p>
+  </div>
+  <div class="cat-grid">
+    <button class="cat-btn" style="border-color:rgba(78,205,196,.3)" onclick="showScr('mathTopicScr')">
+      <div class="c-icon">🔢</div><div class="c-name">חשבון</div><div class="c-cnt">אינסוף תרגילים</div>
+    </button>
+    <button class="cat-btn" style="border-color:rgba(162,155,254,.3)" onclick="showScr('readTopicScr');buildReadTopics()">
+      <div class="c-icon">📖</div><div class="c-name">קריאה</div><div class="c-cnt" id="readCntHome">טוען...</div>
+    </button>
+    <button class="cat-btn" style="border-color:rgba(78,205,196,.3)" onclick="showScr('engTopicScr')">
+      <div class="c-icon">🇬🇧</div><div class="c-name">אנגלית</div><div class="c-cnt">Letters & Words</div>
+    </button>
+    <button class="cat-btn" style="border-color:rgba(247,201,72,.3)" onclick="goJudaism()">
+      <div class="c-icon">✡️</div><div class="c-name">יהדות</div><div class="c-cnt" id="judStatus">🔒 ממתין לאישור</div>
+    </button>
+  </div>
+  <div class="admin-area">
+    <button class="admin-toggle" onclick="toggleAdmin('ap1')">🔐 כניסת הורה</button>
+    <div class="admin-panel" id="ap1">
+      <input type="password" class="adm-inp" id="ac1" placeholder="קוד סודי" maxlength="10">
+      <button class="adm-btn" onclick="doReset('ac1','am1')">✓ איפוס נקודות בלבד</button>
+      <button class="adm-btn" style="background:rgba(255,107,107,.18);border-color:var(--a2);color:var(--a2)" onclick="doFullReset('ac1','am1')">🔄 איפוס מלא (הכל מהתחלה)</button>
+      <button class="adm-btn" style="background:rgba(162,155,254,.18);border-color:var(--a4);color:var(--a4)" onclick="openParentView('ac1','am1')">👁️ מצב צפייה — סטטיסטיקות</button>
+      <button class="adm-btn" style="background:rgba(78,205,196,.18);border-color:var(--a3);color:var(--a3)" onclick="doPreviewBtn('ac1','am1')">🔍 מצב צפייה — גלישה חופשית</button>
+      <div class="adm-msg" id="am1"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MATH TOPICS ══ -->
+<div class="scr" id="mathTopicScr">
+  <button class="back-btn" onclick="showScr('homeScr')">← חזרה</button>
+  <div class="sec-lbl">בחר נושא</div>
+  <div class="topic-grid">
+    <button class="topic-btn" onclick="startMath('add1')"><div class="t-icon">➕</div><div class="t-name">חיבור</div><div class="t-sub">עד 20</div></button>
+    <button class="topic-btn" onclick="startMath('sub1')"><div class="t-icon">➖</div><div class="t-name">חיסור</div><div class="t-sub">עד 20</div></button>
+    <button class="topic-btn" onclick="startMath('mix1')"><div class="t-icon">🔀</div><div class="t-name">מעורב</div><div class="t-sub">חיבור + חיסור</div></button>
+    <button class="topic-btn" onclick="startMath('tens')"><div class="t-icon">💯</div><div class="t-name">עשרות</div><div class="t-sub">אתגר!</div></button>
+    <button class="topic-btn" onclick="startMath('hund')"><div class="t-icon">🔢</div><div class="t-name">מאות ואלפים</div><div class="t-sub">אתגר גדול!</div></button>
+    <button class="topic-btn" onclick="startMath('cmp')"><div class="t-icon">⚖️</div><div class="t-name">השוואה</div><div class="t-sub">גדול / קטן</div></button>
+  </div>
+</div>
+
+<!-- ══ MATH GAME ══ -->
+<div class="scr" id="mathScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('mathTopicScr')">← חזרה</button>
+    <span class="badge b-math" id="mathBadge">🔢</span>
+  </div>
+  <div class="streak" id="stk1"></div>
+  <div class="q-card"><div class="q-num" id="mQNum"></div><div class="math-eq" id="mQTxt"></div></div>
+  <div class="mc-grid" id="mAns"></div>
+  <div class="fb" id="mFb"></div>
+  <button class="next-btn" id="mNext" onclick="nextMath()" style="display:none">שאלה הבאה ➜</button>
+</div>
+
+<!-- ══ READ TOPICS ══ -->
+<div class="scr" id="readTopicScr">
+  <button class="back-btn" onclick="showScr('homeScr')">← חזרה</button>
+  <div class="sec-lbl">בחר נושא</div>
+  <div class="topic-grid" id="readTopicGrid"></div>
+</div>
+
+<!-- ══ STORY ══ -->
+<div class="scr" id="storyScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('readTopicScr');buildReadTopics()">← חזרה</button>
+    <span class="badge b-story" id="storyBadge">📖</span>
+  </div>
+  <div class="story-card">
+    <div class="story-art" id="sArt"></div>
+    <div class="story-title" id="sTitle"></div>
+    <div class="story-body" id="sBody"></div>
+  </div>
+  <button class="sub-btn" onclick="goStoryQs()">📝 שאלות על הסיפור ➜</button>
+</div>
+
+<!-- ══ STORY Qs ══ -->
+<div class="scr" id="sqScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="backToStory()">← חזרה לסיפור</button>
+    <span class="badge b-story">❓ שאלות</span>
+  </div>
+  <div class="qprog" id="qprog"></div>
+  <div class="streak" id="stk2"></div>
+  <div class="q-card">
+    <div class="q-num" id="sqNum"></div>
+    <div class="q-text" id="sqTxt" style="font-size:1.15rem;margin-bottom:12px"></div>
+    <div class="kbd-toggle">
+      <button class="kbd-tab active" id="kbdTabH" onclick="switchKbd('heb')">⌨️ עברית</button>
+      <button class="kbd-tab" id="kbdTabS" onclick="switchKbd('sys')">📱 מקלדת</button>
+    </div>
+    <div style="margin-top:8px">
+      <textarea class="ans-inp" id="sqInp" placeholder="כתוב תשובתך כאן..." rows="2"></textarea>
+    </div>
+    <div style="font-size:.75rem;color:var(--mut);text-align:center;margin-top:4px" id="sqSaved"></div>
+  </div>
+  <div class="heb-kbd" id="hebKbd"></div>
+  <button class="sub-btn" onclick="checkSQ()">✓ בדוק תשובה</button>
+  <div class="fb" id="sqFb"></div>
+  <button class="next-btn" id="sqNext" onclick="nextSQ()" style="display:none">הבא ➜</button>
+</div>
+
+<!-- ══ READ MC ══ -->
+<div class="scr" id="rqScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('readTopicScr');buildReadTopics()">← חזרה</button>
+    <span class="badge b-read">📖 קריאה</span>
+  </div>
+  <div class="streak" id="stk3"></div>
+  <div class="q-card">
+    <div class="q-num" id="rqNum"></div>
+    <div style="font-size:2rem;text-align:center;padding:6px 0" id="rqEmoji"></div>
+    <div class="q-text" id="rqTxt" style="font-size:1.1rem;margin-bottom:4px"></div>
+    <div style="font-size:.75rem;color:var(--mut)" id="rqHint"></div>
+  </div>
+  <div class="mc-grid" id="rqAns"></div>
+  <div class="fb" id="rqFb"></div>
+  <button class="next-btn" id="rqNext" onclick="nextRQ()" style="display:none">שאלה הבאה ➜</button>
+</div>
+
+<!-- ══ WORD COMPLETE ══ -->
+<div class="scr" id="wcScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('readTopicScr');buildReadTopics()">← חזרה</button>
+    <span class="badge b-read">🔡 השלמה</span>
+  </div>
+  <div class="streak" id="stkWC"></div>
+  <div class="q-card">
+    <div class="q-num" id="wcNum"></div>
+    <div style="font-size:.8rem;color:var(--mut);text-align:center;margin-bottom:6px" id="wcClue"></div>
+    <div style="font-size:2rem;font-weight:900;text-align:center;letter-spacing:6px;color:var(--acc);padding:10px;background:var(--card2);border-radius:10px" id="wcWord"></div>
+  </div>
+  <div class="mc-grid" id="wcAns"></div>
+  <div class="fb" id="wcFb"></div>
+  <button class="next-btn" id="wcNext" onclick="nextWC()" style="display:none">שאלה הבאה ➜</button>
+</div>
+
+<!-- ══ PIC WORD ══ -->
+<div class="scr" id="pwScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('readTopicScr');buildReadTopics()">← חזרה</button>
+    <span class="badge b-read">🖼️ תמונה→מילה</span>
+  </div>
+  <div class="streak" id="stkPW"></div>
+  <div class="q-card">
+    <div class="q-num" id="pwNum"></div>
+    <div style="font-size:4rem;text-align:center;padding:8px" id="pwEmoji"></div>
+    <div style="font-size:.95rem;font-weight:700;text-align:center;color:var(--mut)">מָה כָּתוּב בַּמִּלָּה הַזֹּאת?</div>
+  </div>
+  <div class="mc-grid" id="pwAns"></div>
+  <div class="fb" id="pwFb"></div>
+  <button class="next-btn" id="pwNext" onclick="nextPW()" style="display:none">שאלה הבאה ➜</button>
+</div>
+
+<!-- ══ OPPOSITES ══ -->
+<div class="scr" id="oppScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('readTopicScr');buildReadTopics()">← חזרה</button>
+    <span class="badge b-read">↔️ הפכים</span>
+  </div>
+  <div class="streak" id="stkOpp"></div>
+  <div class="q-card">
+    <div class="q-num" id="oppNum"></div>
+    <div style="font-size:2rem;font-weight:900;text-align:center;color:var(--acc);padding:10px" id="oppWord"></div>
+    <div style="font-size:.9rem;color:var(--mut);text-align:center">מָה הַהֶפֵּךְ?</div>
+  </div>
+  <div class="mc-grid" id="oppAns"></div>
+  <div class="fb" id="oppFb"></div>
+  <button class="next-btn" id="oppNext" onclick="nextOpp()" style="display:none">שאלה הבאה ➜</button>
+</div>
+
+<!-- ══ ENGLISH TOPICS ══ -->
+<div class="scr" id="engTopicScr">
+  <button class="back-btn" onclick="showScr('homeScr')">← חזרה</button>
+  <div class="sec-lbl">English — בחר נושא</div>
+  <div style="background:var(--card);border-radius:var(--r);padding:14px;border:1px solid rgba(78,205,196,.2);font-size:.85rem;color:var(--mut);text-align:center;direction:rtl">
+    לומדים את האותיות A עד Z — שם, צורה ואמוג'י 🎉
+  </div>
+  <div class="topic-grid">
+    <button class="topic-btn" onclick="startEng('see_name')">
+      <div class="t-icon">🔡</div>
+      <div class="t-name" style="direction:ltr">A → "Ay"</div>
+      <div class="t-sub">רואים אות → בוחרים שם</div>
+    </button>
+    <button class="topic-btn" onclick="startEng('name_see')">
+      <div class="t-icon">🔤</div>
+      <div class="t-name" style="direction:ltr">"Ay" → A</div>
+      <div class="t-sub">שומעים שם → בוחרים אות</div>
+    </button>
+    <button class="topic-btn" onclick="startEng('pic_letter')">
+      <div class="t-icon">🖼️</div>
+      <div class="t-name">תמונה → אות</div>
+      <div class="t-sub">🍎 → A</div>
+    </button>
+  </div>
+</div>
+
+<!-- ══ ENGLISH GAME ══ -->
+<div class="scr" id="engScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('engTopicScr')">← Back</button>
+    <span class="badge" style="background:rgba(78,205,196,.2);color:var(--a3)" id="engBadge">🔤</span>
+  </div>
+  <div class="streak" id="stkEng"></div>
+  <!-- Big letter / name card -->
+  <div style="background:var(--card);border-radius:var(--r);padding:20px 16px;text-align:center;border:1px solid rgba(78,205,196,.25);box-shadow:var(--sh)">
+    <div style="font-size:.75rem;color:var(--mut);margin-bottom:8px" id="engNum"></div>
+    <!-- The big display — letter or emoji depending on mode -->
+    <div id="engBigDisplay" style="font-size:7rem;font-weight:900;line-height:1;font-family:monospace;color:var(--acc);letter-spacing:4px;direction:ltr;margin:8px 0;text-shadow:0 0 30px rgba(247,201,72,.3)"></div>
+    <!-- Subtitle (word/hint) -->
+    <div id="engSub" style="font-size:1.1rem;color:var(--mut);margin-top:6px;direction:ltr"></div>
+  </div>
+  <div style="font-size:.8rem;color:var(--mut);text-align:center;direction:rtl" id="engInstruction"></div>
+  <div class="mc-grid" id="engAns"></div>
+  <div class="fb" id="engFb"></div>
+  <button class="next-btn" id="engNext" onclick="nextEng()" style="display:none">Next ➜</button>
+</div>
+
+<!-- ══ JUDAISM ══ -->
+<div class="scr" id="judScr">
+  <button class="back-btn" onclick="showScr('homeScr')">← חזרה</button>
+  <!-- Locked view -->
+  <div id="judLocked">
+    <div class="done-card" style="text-align:center">
+      <div style="font-size:3rem">🔒</div>
+      <h2 style="color:var(--a4)">יהדות — ממתין לאישור הורה</h2>
+      <p style="line-height:1.9">
+        📜 פרשות השבוע<br>🕍 חגי ישראל<br>🕯️ שבת ומנהגים<br>❤️ ערכים ומצוות
+      </p>
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+        <input type="password" class="adm-inp" id="judCode" placeholder="קוד הורה לאישור" maxlength="10">
+        <button class="sub-btn" onclick="approveJud()">🔓 אשר ופתח</button>
+        <div class="adm-msg" id="judMsg"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Open view -->
+  <div id="judOpen" style="display:none;flex-direction:column;gap:12px">
+    <div class="sec-lbl">בחר נושא</div>
+    <div class="topic-grid">
+      <button class="topic-btn" onclick="startJud('parasha')"><div class="t-icon">📜</div><div class="t-name">פרשת השבוע</div><div class="t-sub">סיפורי תורה</div></button>
+      <button class="topic-btn" onclick="startJud('holidays')"><div class="t-icon">🕍</div><div class="t-name">חגים</div><div class="t-sub">חגי ישראל</div></button>
+      <button class="topic-btn" onclick="startJud('shabbat')"><div class="t-icon">🕯️</div><div class="t-name">שבת</div><div class="t-sub">הלכות שבת</div></button>
+      <button class="topic-btn" onclick="startJud('values')"><div class="t-icon">❤️</div><div class="t-name">ערכים</div><div class="t-sub">מצוות ומידות</div></button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ JUDAISM GAME ══ -->
+<div class="scr" id="judGameScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('judScr');openJudIfApproved()">← חזרה</button>
+    <span class="badge" style="background:rgba(247,201,72,.2);color:var(--acc)" id="judBadge">✡️</span>
+  </div>
+  <div class="streak" id="stkJud"></div>
+  <div class="q-card">
+    <div class="q-num" id="judNum"></div>
+    <div style="font-size:2.5rem;text-align:center;padding:6px" id="judEmoji"></div>
+    <div class="q-text" id="judQTxt" style="font-size:1.1rem;text-align:center"></div>
+    <div style="font-size:.78rem;color:var(--mut);text-align:center;margin-top:4px" id="judHint"></div>
+  </div>
+  <div class="mc-grid" id="judAns"></div>
+  <div class="fb" id="judFb"></div>
+  <button class="next-btn" id="judNext" onclick="nextJud()" style="display:none">שאלה הבאה ➜</button>
+</div>
+
+<!-- ══ PARENT VIEW ══ -->
+<div class="scr" id="parentScr">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <button class="back-btn" onclick="showScr('homeScr')">← חזרה</button>
+    <span class="badge" style="background:rgba(247,201,72,.2);color:var(--acc)">👨‍👩‍👦 מצב הורה</span>
+  </div>
+  <!-- TABS -->
+  <div style="display:flex;gap:6px;background:var(--card);border-radius:12px;padding:5px">
+    <button class="parent-tab active" id="tab-stats" onclick="switchParentTab('stats')">📊 סטטיסטיקות</button>
+    <button class="parent-tab" id="tab-prizes" onclick="switchParentTab('prizes')">🎁 פרסים</button>
+    <button class="parent-tab" id="tab-stories" onclick="switchParentTab('stories')">📖 סיפורים</button>
+  </div>
+  <!-- TAB: STATS -->
+  <div id="ptab-stats" class="q-card" style="overflow-y:auto;max-height:55vh"></div>
+  <!-- TAB: PRIZES -->
+  <div id="ptab-prizes" class="q-card" style="display:none;overflow-y:auto;max-height:55vh">
+    <div style="font-size:.8rem;font-weight:700;color:var(--acc);margin-bottom:12px">🎁 רשימת פרסים — לחץ ✕ למחוק</div>
+    <div id="prizesList" style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px"></div>
+    <div style="font-size:.8rem;color:var(--muted);margin-bottom:6px">הוספת פרס חדש:</div>
+    <div style="display:flex;gap:8px">
+      <input type="text" id="newPrizeInp" placeholder="פרס חדש..." maxlength="50"
+        style="flex:1;background:var(--bg);border:2px solid rgba(255,255,255,.15);border-radius:10px;color:var(--txt);font-family:Heebo,sans-serif;font-size:.95rem;padding:9px 12px;direction:rtl">
+      <button onclick="addPrize()" style="background:rgba(78,205,196,.2);border:1px solid var(--a3);color:var(--a3);font-family:Heebo,sans-serif;font-weight:700;padding:9px 16px;border-radius:10px;cursor:pointer;white-space:nowrap;font-size:.9rem">+ הוסף</button>
+    </div>
+    <button onclick="resetPrizesToDefault()" style="margin-top:10px;background:none;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:Heebo,sans-serif;font-size:.75rem;padding:6px 12px;border-radius:8px;cursor:pointer;width:100%">↺ איפוס לרשימה המקורית</button>
+  </div>
+  <!-- TAB: STORIES -->
+  <div id="ptab-stories" class="q-card" style="display:none;overflow-y:auto;max-height:55vh"></div>
+
+  <button class="sub-btn" onclick="enterPreviewMode();showScr('homeScr')">🔍 גלישה חופשית בתוכן</button>
+  <button class="next-btn" onclick="showScr('homeScr')">← חזרה לבית</button>
+</div>
+
+<!-- ══ PRIZE ══ -->
+<div class="scr" id="prizeScr">
+  <div class="prize-wrap">
+    <div class="prize-spin">🎉🎊🎉</div>
+    <h2 style="font-size:1.45rem;color:var(--acc);margin:8px 0">כל הכבוד!!! 🌟</h2>
+    <p style="color:var(--mut);font-size:.85rem;margin-bottom:12px">צברת 100 נקודות! הנה הפרס שלך:</p>
+    <div class="prize-card"><h2>🎁 הפרס שלך:</h2><div style="font-size:1.8rem;margin:5px 0">⭐⭐⭐</div><div class="prize-name" id="prizeName"></div><div style="font-size:1.8rem;margin:5px 0">⭐⭐⭐</div></div>
+    <p style="color:var(--mut);font-size:.8rem;margin-top:8px">תראה לאבא/אמא! 🥳</p>
+  </div>
+  <div class="admin-area">
+    <button class="admin-toggle" onclick="toggleAdmin('ap2')">🔐 אישור פרס — הורה</button>
+    <div class="admin-panel" id="ap2">
+      <input type="password" class="adm-inp" id="ac2" placeholder="קוד סודי" maxlength="10">
+      <button class="adm-btn" onclick="doReset('ac2','am2',true)">✓ אישור ואיפוס</button>
+      <div class="adm-msg" id="am2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ALL DONE ══ -->
+<div class="scr" id="doneScr">
+  <div class="done-card">
+    <div style="font-size:3.2rem">🏆</div>
+    <h2>וואו! גמרת הכל!</h2>
+    <p>אתה ממש מדהים! 🌟<br><br><strong style="color:var(--acc)">בקש מאבא להוסיף משימות חדשות!</strong></p>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- Custom confirm dialog -->
+<div id="confirmOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:10000;align-items:center;justify-content:center;padding:20px">
+  <div style="background:var(--card);border-radius:var(--r);padding:24px;max-width:340px;width:100%;border:1px solid rgba(255,118,117,.4);box-shadow:0 8px 40px rgba(0,0,0,.6)">
+    <div style="font-size:2rem;text-align:center;margin-bottom:10px">🔄</div>
+    <div style="font-weight:700;font-size:1rem;text-align:center;margin-bottom:8px;color:var(--txt)">איפוס מלא</div>
+    <div style="font-size:.88rem;color:var(--muted);text-align:center;line-height:1.6;margin-bottom:18px">סיפורים, תשובות, נקודות — הכל יימחק.<br>להמשיך?</div>
+    <div style="display:flex;gap:10px">
+      <button id="confirmNo" style="flex:1;background:var(--card2);border:1px solid rgba(255,255,255,.15);color:var(--muted);font-family:Heebo,sans-serif;font-size:.95rem;padding:11px;border-radius:12px;cursor:pointer">ביטול</button>
+      <button id="confirmYes" style="flex:1;background:rgba(255,118,117,.25);border:1px solid var(--red);color:var(--red);font-family:Heebo,sans-serif;font-size:.95rem;font-weight:700;padding:11px;border-radius:12px;cursor:pointer">כן, אפס הכל</button>
+    </div>
+  </div>
+</div>
+<div class="pts-pop" id="ptsPop"></div>
+<script>
+const STORIES = [
+  /* ── SPORT ── */
+  {id:'s01',topic:'sport',art:'⚽🏟️⚽',title:'הַמִּשְׂחָק הַגָּדוֹל',
+   body:`<p>דָּוִד אוֹהֵב כַּדּוּרֶגֶל מְאֹד.</p>
+<p>בְּכָל יוֹם שִׁשִּׁי הוּא מְשַׂחֵק עִם חֲבֵרָיו בַּגָּן.</p>
+<p>הַיּוֹם יֵשׁ מִשְׂחָק גָּדוֹל. דָּוִד וְחֶבְרוֹ יוֹסִי נֶגֶד הַקְּבוּצָה הַכְּחֻלָּה.</p>
+<p>דָּוִד רָץ מַהֵר וּמְסַסֵּר אֶת הַכַּדּוּר לְיוֹסִי.</p>
+<p>יוֹסִי בּוֹעֵט חָזָק — גוֹל! הַקְּבוּצָה שֶׁל דָּוִד נִצְּחָה!</p>
+<p>אַחֲרֵי הַמִּשְׂחָק הֵם שׁוֹתִים מַיִם קָרִים וּמְחַיְּכִים.</p>`,
+   qs:[{q:'מָה שֵׁם חֲבֵרוֹ שֶׁל דָּוִד?',a:'יוסי',kw:['יוסי']},
+       {q:'מָתַי הֵם מְשַׂחֲקִים?',a:'ביום שישי',kw:['שישי']},
+       {q:'מִי הִכְנִיס גּוֹל?',a:'יוסי',kw:['יוסי']},
+       {q:'מָה שָׁתוּ אַחֲרֵי הַמִּשְׂחָק?',a:'מים קרים',kw:['מים','קרים']}]},
+
+  {id:'s02',topic:'sport',art:'🏃‍♂️🏅✨',title:'רַץ הַמַּרָתוֹן',
+   body:`<p>נוֹעָה רָצְתָה מְאֹד לָרוּץ בְּמַרָתוֹן הָעִיר.</p>
+<p>כָּל בֹּקֶר הִיא קָמָה מוּקְדָּם וְרָצָה בָּרְחוֹב.</p>
+<p>בְּיוֹם הַמַּרָתוֹן הָיוּ עֶשְׂרִים יְלָדִים.</p>
+<p>נוֹעָה רָצָה מַהֵר מְאֹד — לֹא עָצְרָה אֲפִלּוּ פַּעַם אַחַת.</p>
+<p>בַּסּוֹף נוֹעָה הִגִּיעָה רִאשׁוֹנָה! הִיא קִיבְּלָה מֶדַלְיָה זְהוּבָה.</p>
+<p>אִמָּא שֶׁלָּהּ חִבְּקָה אוֹתָהּ וְאָמְרָה: "אֲנִי כָּל כָּךְ גַּאֲוָה בָּךְ!"</p>`,
+   qs:[{q:'מַה שֵׁם הַיַּלְדָּה?',a:'נועה',kw:['נועה']},
+       {q:'מָתַי הִיא הִתְאַמֶּנֶת?',a:'כל בוקר',kw:['בוקר']},
+       {q:'כַּמָּה יְלָדִים הָיוּ?',a:'עשרים',kw:['עשרים','20']},
+       {q:'מָה קִיבְּלָה נוֹעָה?',a:'מדליה זהובה',kw:['מדליה','זהובה']}]},
+
+  {id:'s03',topic:'sport',art:'🏊‍♀️🥇💦',title:'שְׁחִיָּה אֶל הַנִּצָּחוֹן',
+   body:`<p>כָּרְמֶל אוֹהֶבֶת לִשְׂחוֹת. הִיא מִתְאַמֶּנֶת שָׁלוֹשׁ פְּעָמִים בַּשָּׁבוּעַ.</p>
+<p>בְּיוֹם הַתַּחֲרוּת הִיא לָבְשָׁה בֶּגֶד יָם כָּחֹל.</p>
+<p>כְּשֶׁהַשּׁוֹפֵר צִפְצֵף — כָּרְמֶל קָפְצָה לַמַּיִם.</p>
+<p>הִיא שָׂחָה מַהֵר מְאֹד וְהִגִּיעָה רִאשׁוֹנָה לַקִּיר!</p>
+<p>כֻּלָּם מָחֲאוּ כַּפַּיִם. אִמָּא וְאַבָּא צָעֲקוּ: "יָפָה כָּרְמֶל!"</p>`,
+   qs:[{q:'כַּמָּה פְּעָמִים בַּשָּׁבוּעַ מִתְאַמֶּנֶת כָּרְמֶל?',a:'שלוש',kw:['שלוש','3']},
+       {q:'אֵיזֶה צֶבַע בֶּגֶד הַיָּם שֶׁלָּהּ?',a:'כחול',kw:['כחול','כחולה']},
+       {q:'מָה עָשְׂתָה כָּרְמֶל כְּשֶׁהַשּׁוֹפֵר צִפְצֵף?',a:'קפצה למים',kw:['קפצה','קפץ','מים']},
+       {q:'מֵה מָקוֹם הִגִּיעָה?',a:'ראשונה',kw:['ראשונה','ראשון']}]},
+
+  /* ── ANIMALS ── */
+  {id:'s04',topic:'animal',art:'🐶🦴🐾',title:'הַגּוּר הַקָּטָן',
+   body:`<p>לְמִשְׁפַּחַת לֵוִי יֵשׁ גּוּר קָטָן וְחָמוּד שְׁמוֹ בּוּבִי.</p>
+<p>בּוּבִי אוֹהֵב לְשַׂחֵק בַּגִּנָּה וְלִרְדֹּף אַחֲרֵי הַכַּדּוּר.</p>
+<p>אַבָּא קוֹנֶה לוֹ עֶצֶם גְּדוֹלָה. בּוּבִי שָׂמֵחַ מְאֹד.</p>
+<p>בַּלַּיְלָה בּוּבִי יָשֵׁן עַל שַׂק הַשֵּׁנָה הָאָדֹם שֶׁלּוֹ.</p>
+<p>כָּל בֹּקֶר הוּא מְנַשֵּׁק אֶת כֻּלָּם וּמֵנִיעַ אֶת הַזָּנָב.</p>`,
+   qs:[{q:'מַה שֵׁם הַגּוּר?',a:'בובי',kw:['בובי']},
+       {q:'מָה בּוּבִי אוֹהֵב לַעֲשׂוֹת?',a:'לשחק בגינה',kw:['לשחק','גינה','כדור']},
+       {q:'מָה קָנָה אַבָּא לְבּוּבִי?',a:'עצם גדולה',kw:['עצם','גדולה']},
+       {q:'עַל מָה בּוּבִי יָשֵׁן?',a:'שק שינה אדום',kw:['שק','אדום']}]},
+
+  {id:'s05',topic:'animal',art:'🐱🌙✨',title:'הַחָתוּל הַכַּתֹּם',
+   body:`<p>לְמִישֶׁל יֵשׁ חָתוּל כַּתֹּם שְׁמוֹ שֶׁמֶשׁ.</p>
+<p>שֶׁמֶשׁ אוֹהֵב לִישֹׁן עַל הַסַּפָּה כָּל הַיּוֹם.</p>
+<p>בַּלַּיְלָה הוּא קָם וְהוֹלֵךְ לֶאֱכֹל דָּג טָעִים.</p>
+<p>מִישֶׁל מְלַטֶּפֶת אֶת שֶׁמֶשׁ בְּכָל עֶרֶב לִפְנֵי הַשֵּׁנָה.</p>
+<p>שֶׁמֶשׁ מְנַקֶּה אֶת הַפַּנִּים שֶׁלּוֹ עִם הַכַּף — חָתוּל מְנֻמָּס!</p>`,
+   qs:[{q:'מַה שֵׁם הַחָתוּל?',a:'שמש',kw:['שמש']},
+       {q:'אֵיפֹה שֶׁמֶשׁ יָשֵׁן?',a:'על הספה',kw:['ספה']},
+       {q:'מָה שֶׁמֶשׁ אוֹכֵל בַּלַּיְלָה?',a:'דג',kw:['דג']},
+       {q:'מָה מִישֶׁל עוֹשָׂה כָּל עֶרֶב?',a:'מלטפת את שמש',kw:['מלטפת','לטף']}]},
+
+  {id:'s06',topic:'animal',art:'🐬🌊💙',title:'הַדֶּלְפִין הַמַּרְגִּישׁ',
+   body:`<p>בַּיָּם הַגָּדוֹל גָּר דֶּלְפִין שְׁמוֹ דוּבִי.</p>
+<p>דּוּבִי אָהַב לְקַפֵּץ גָּבוֹהַּ מֵהַמַּיִם וְלִצְחֹק.</p>
+<p>יוֹם אֶחָד הוּא מָצָא דָּג קָטָן שֶׁנֶּאֱלַם בְּרֶשֶׁת.</p>
+<p>דּוּבִי עָזַר לוֹ לָצֵאת בִּזְהִירוּת.</p>
+<p>הַדָּג אָמַר תּוֹדָה וְהֵם הָפְכוּ לַחֲבֵרִים טוֹבִים.</p>
+<p>כָּל יוֹם הֵם שָׂחִים יַחַד בַּיָּם הַכָּחֹל.</p>`,
+   qs:[{q:'מַה שֵׁם הַדֶּלְפִין?',a:'דובי',kw:['דובי']},
+       {q:'מָה דּוּבִי אָהַב לַעֲשׂוֹת?',a:'לקפץ גבוה מהמים',kw:['לקפץ','קפץ','גבוה']},
+       {q:'מָה מָצָא דּוּבִי?',a:'דג ברשת',kw:['דג','רשת']},
+       {q:'מֶה קָרָה בַּסּוֹף?',a:'הם הפכו לחברים',kw:['חברים','חברות']}]},
+
+  {id:'s07',topic:'animal',art:'🦁🌴🌟',title:'הָאַרְיֵה הַטּוֹב',
+   body:`<p>בַּסַּוַנָּה גָּר אַרְיֵה שְׁמוֹ אֲרִיאֵל.</p>
+<p>אֲרִיאֵל הָיָה אַרְיֵה גָּדוֹל וְחָזָק — אֲבָל גַּם אָדִיב.</p>
+<p>יוֹם אֶחָד גּוּר אַרְיֵה קָטָן אָבַד בַּג'וּנְגֶּל.</p>
+<p>אֲרִיאֵל מָצָא אֶת הַגּוּר וְהֶחֱזִיר אוֹתוֹ לְאִמּוֹ.</p>
+<p>אִמָּא הָאַרְיָה אָמְרָה: "תּוֹדָה רַבָּה, אֲרִיאֵל!"</p>
+<p>מֵאָז כָּל חַיּוֹת הַסַּוַנָּה אָהֲבוּ אֶת אֲרִיאֵל.</p>`,
+   qs:[{q:'מַה שֵׁם הָאַרְיֵה?',a:'אריאל',kw:['אריאל']},
+       {q:'מָה קָרָה לַגּוּר?',a:'אבד בג\'ונגל',kw:['אבד','ג\'ונגל','אבוד']},
+       {q:'מָה עָשָׂה אֲרִיאֵל?',a:'החזיר את הגור לאמו',kw:['החזיר','אמו','אם']},
+       {q:'מֶה קָרָה מֵאָז?',a:'כל החיות אהבו אותו',kw:['חיות','אהבו']}]},
+
+  /* ── HEROES ── */
+  {id:'s08',topic:'hero',art:'🦸‍♂️⚡🌟',title:'גִּבּוֹר הַשְּׁכוּנָה',
+   body:`<p>בַּשְּׁכוּנָה שֶׁל רוֹן גָּר גִּבּוֹר עַל בְּשֵׁם כּוֹכַב כֶּסֶף.</p>
+<p>כּוֹכַב כֶּסֶף יָכוֹל לָעוּף וְלִרְדֹּף רְשָׁעִים.</p>
+<p>יוֹם אֶחָד כֶּלֶב קָטָן נֶאֱלַם עַל עֵץ גָּבוֹהַּ.</p>
+<p>כּוֹכַב כֶּסֶף עָף בִּמְהִירוּת וְהוֹרִיד אֶת הַכֶּלֶב בְּבִטְחָה.</p>
+<p>כָּל הַיְּלָדִים צָעֲקוּ: "תּוֹדָה כּוֹכַב כֶּסֶף!"</p>`,
+   qs:[{q:'מַה שֵׁם הַגִּבּוֹר?',a:'כוכב כסף',kw:['כוכב','כסף']},
+       {q:'מָה כּוֹכַב כֶּסֶף יָכוֹל לַעֲשׂוֹת?',a:'לעוף',kw:['לעוף','עף']},
+       {q:'מֶה קָרָה לַכֶּלֶב?',a:'נתקע על עץ גבוה',kw:['עץ','גבוה','תקוע']},
+       {q:'מָה צָעֲקוּ הַיְּלָדִים?',a:'תודה',kw:['תודה']}]},
+
+  {id:'s09',topic:'hero',art:'🐆🦸‍♀️💥',title:'הַנֶּמֶר הַמְּעוֹפֵף',
+   body:`<p>לִילִי הִיא גִּבּוֹרָה עַל — הַנֶּמֶר הַמְּעוֹפֵף.</p>
+<p>יֵשׁ לָהּ כְּנָפַיִם כְּתֻמּוֹת וְהִיא רָצָה מַהֵר כְּמוֹ רַעַם.</p>
+<p>יוֹם אֶחָד יֶלֶד אִבֵּד אֶת הַכַּדּוּר בַּנָּהָר.</p>
+<p>לִילִי קָפְצָה לַמַּיִם וְהוֹצִיאָה אֶת הַכַּדּוּר.</p>
+<p>הַיֶּלֶד בָּכָה — וְאַחַר כָּךְ חִיֵּךְ כִּי קִיבֵּל אֶת הַכַּדּוּר חֲזָרָה.</p>`,
+   qs:[{q:'מַה שֵׁם הַגִּבּוֹרָה?',a:'לילי',kw:['לילי']},
+       {q:'אֵיזֶה צֶבַע הַכְּנָפַיִם?',a:'כתומות',kw:['כתום','כתומות']},
+       {q:'מָה אִבֵּד הַיֶּלֶד?',a:'הכדור',kw:['כדור']},
+       {q:'לְאַן קָפְצָה לִילִי?',a:'לנהר',kw:['נהר','מים']}]},
+
+  {id:'s10',topic:'hero',art:'🦸‍♂️🛡️❤️',title:'הָאָח הַמָּגֵן',
+   body:`<p>לְעָדִי יֵשׁ אָח קָטָן בְּשֵׁם נֹעָם.</p>
+<p>יוֹם אֶחָד נֹעָם נָפַל וּבָכָה. עָדִי רָץ אֵלָיו מַהֵר.</p>
+<p>הוּא רָחַץ אֶת הַבֶּרֶךְ, שָׂם פְּלַסְטֵר וְנִשֵּׁק אֶת הַפֶּצַע.</p>
+<p>נֹעָם הִפְסִיק לִבְכּוֹת וְחִיֵּךְ לְעָדִי.</p>
+<p>אִמָּא אָמְרָה: "עָדִי, אַתָּה הַגִּבּוֹר הָאֲמִתִּי שֶׁל הַמִּשְׁפָּחָה!"</p>`,
+   qs:[{q:'מַה שֵׁם הָאָח הַקָּטָן?',a:'נועם',kw:['נועם']},
+       {q:'מָה עָשָׂה עָדִי לַבֶּרֶךְ?',a:'רחץ ושם פלסטר',kw:['רחץ','פלסטר']},
+       {q:'מָה עָשָׂה עָדִי לַפֶּצַע?',a:'נישק',kw:['נישק','נשיקה']},
+       {q:'מָה אָמְרָה אִמָּא?',a:'שעדי הוא הגיבור',kw:['גיבור','אמיתי']}]},
+
+  /* ── KIDS ── */
+  {id:'s11',topic:'kids',art:'🎂🎁🎈',title:'יוֹם הֻלֶּדֶת מַפְתִּיעַ',
+   body:`<p>הַיּוֹם יוֹם הֻלֶּדֶת שֶׁל מַיָּה — הִיא מָלְאָה שֶׁבַע שָׁנִים.</p>
+<p>הַחֲבֵרוֹת הֶחְבִּיאוּ בַּחֶדֶר עִם עֻגָּה וּבַלּוֹנִים.</p>
+<p>כְּשֶׁמַּיָּה פָּתְחָה אֶת הַדֶּלֶת כֻּלָּם צָעֲקוּ: "הַפְתָּעָה!"</p>
+<p>הָיוּ עֲשָׂרָה בַּלּוֹנִים — אֲדֻמִּים, כְּחֻלִּים וְצְהֻבִּים.</p>
+<p>עַל הָעֻגָּה שֶׁבַע נֵרוֹת. מַיָּה פָּפְחָה עֲלֵיהֶם וְהֵם כָּבוּ.</p>`,
+   qs:[{q:'כַּמָּה שָׁנִים מָלְאוּ לְמַיָּה?',a:'שבע',kw:['שבע','7']},
+       {q:'מָה הָיָה בַּחֶדֶר?',a:'עוגה ובלונים',kw:['עוגה','בלונים']},
+       {q:'כַּמָּה בַּלּוֹנִים הָיוּ?',a:'עשרה',kw:['עשרה','10']},
+       {q:'כַּמָּה נֵרוֹת עַל הָעֻגָּה?',a:'שבעה',kw:['שבעה','שבע','7']}]},
+
+  {id:'s12',topic:'kids',art:'👫🤝🌈',title:'הַחָבֵר הֶחָדָשׁ',
+   body:`<p>עוֹמֶר עָבַר לְדִירָה חֲדָשָׁה. הוּא לֹא הִכִּיר אַף אֶחָד.</p>
+<p>בְּיוֹם הָרִאשׁוֹן בַּבֵּית סֵפֶר הוּא יָשַׁב לְבַד בָּהַפְסָקָה.</p>
+<p>פִּתְאוֹם בָּאָה יַלְדָּה בְּשֵׁם שִׁירָה וְשָׁאֲלָה: "רוֹצֶה לְשַׂחֵק אִתָּנוּ?"</p>
+<p>עוֹמֶר שָׂמַח וְאָמַר: "כֵּן, תּוֹדָה!"</p>
+<p>הֵם שִׂיחֲקוּ כַּדּוּרֶגֶל יַחַד. עוֹמֶר הִרְגִּישׁ שֶׁהוּא בַּבַּיִת.</p>`,
+   qs:[{q:'מַה שֵׁם הַיֶּלֶד?',a:'עומר',kw:['עומר']},
+       {q:'אֵיפֹה יָשַׁב לְבַד?',a:'בהפסקה',kw:['הפסקה']},
+       {q:'מַה שֵׁם הַיַּלְדָּה?',a:'שירה',kw:['שירה']},
+       {q:'מָה שִׂיחֲקוּ יַחַד?',a:'כדורגל',kw:['כדורגל']}]},
+
+  {id:'s13',topic:'kids',art:'❄️☃️🌨️',title:'הַשֶּׁלֶג הָרִאשׁוֹן',
+   body:`<p>בַּחֹרֶף יָרַד שֶׁלֶג לָבָן עַל הָעִיר.</p>
+<p>בֶּן קָם בַּבֹּקֶר וְרָאָה לָבָן מֵהַחַלּוֹן — הוּא צָעַק: "שֶׁלֶג!"</p>
+<p>הוּא לָבַשׁ מְעִיל עָבֶה וְיָצָא לַחוּץ.</p>
+<p>בֶּן בָּנָה אִישׁ שֶׁלֶג עִם גֶּזֶר בְּמָקוֹם חוֹטֶם.</p>
+<p>אִמָּא נָתְנָה לָהֶם שׁוֹקוֹלָד חַם בְּבֵית.</p>`,
+   qs:[{q:'מָה רָאָה בֶּן מֵהַחַלּוֹן?',a:'שלג',kw:['שלג']},
+       {q:'מָה לָבַשׁ בֶּן?',a:'מעיל עבה',kw:['מעיל']},
+       {q:'מָה שָׂם בְּמָקוֹם הַחוֹטֶם?',a:'גזר',kw:['גזר']},
+       {q:'מָה נָתְנָה אִמָּא?',a:'שוקולד חם',kw:['שוקולד','חם']}]},
+
+  {id:'s14',topic:'kids',art:'🛒🥕🍊',title:'בַּשּׁוּק עִם אַבָּא',
+   body:`<p>בְּיוֹם שִׁישִּׁי אַבָּא לָקַח אֶת יִשַׂי לַשּׁוּק.</p>
+<p>הַשּׁוּק הָיָה צָפוּף וְרוֹעֵשׁ — הַרְבֵּה צְבָעִים וּרֵיחוֹת.</p>
+<p>יִשַׂי בָּחַר תַּפּוּזִים, עַגְבָנִיּוֹת וּמְלָפְפוֹנִים.</p>
+<p>אַבָּא שִׁלֵּם עֶשְׂרִים שֶׁקֶל. הַמּוֹכֵר נָתַן שַׂקִּית גְּדוֹלָה.</p>
+<p>בַּבַּיִת עָשׂוּ סָלָט טָעִים — יִשַׂי אָכַל שָׁלוֹשׁ פְּרוּסוֹת לֶחֶם.</p>`,
+   qs:[{q:'לְאַן אַבָּא לָקַח אֶת יִשַׂי?',a:'לשוק',kw:['שוק']},
+       {q:'כַּמָּה שִׁלֵּם אַבָּא?',a:'עשרים שקל',kw:['עשרים','20']},
+       {q:'מָה יִשַׂי בָּחַר?',a:'תפוזים עגבניות מלפפונים',kw:['תפוזים','עגבניות','מלפפונים']},
+       {q:'כַּמָּה פְּרוּסוֹת אָכַל?',a:'שלוש',kw:['שלוש','3']}]},
+
+  /* ── NATURE ── */
+  {id:'s15',topic:'nature',art:'🌧️🌈☀️',title:'הַגֶּשֶׁם הָרִאשׁוֹן',
+   body:`<p>הַשָּׁמַיִם הִתְכַּסּוּ עָנָן אָפֹר. הַגֶּשֶׁם הִתְחִיל לָרֶדֶת.</p>
+<p>רוֹן קָפַץ בַּשְּׁלוּלִיּוֹת וְצָחַק.</p>
+<p>אִמָּא קָרְאָה: "רוֹן, קַח מָטְרִיָּה!"</p>
+<p>רוֹן לָקַח אֶת הַמָּטְרִיָּה הַכְּחֻלָּה שֶׁלּוֹ וְהֶמְשִׁיךְ לִקְפֹּץ.</p>
+<p>אַחֲרֵי הַגֶּשֶׁם יָצָא קֶשֶׁת בֶּעָנָן יָפֶה. רוֹן סָפַר שֶׁבַע צְבָעִים!</p>`,
+   qs:[{q:'מָה רוֹן עָשָׂה בַּגֶּשֶׁם?',a:'קפץ בשלוליות',kw:['קפץ','שלוליות']},
+       {q:'אֵיזֶה צֶבַע הַמָּטְרִיָּה?',a:'כחולה',kw:['כחול','כחולה']},
+       {q:'מָה יָצָא אַחֲרֵי הַגֶּשֶׁם?',a:'קשת בענן',kw:['קשת']},
+       {q:'כַּמָּה צְבָעִים סָפַר?',a:'שבעה',kw:['שבעה','שבע','7']}]},
+
+  {id:'s16',topic:'nature',art:'🌸🌿🌻',title:'הַגִּנָּה שֶׁל סַבְתָּא',
+   body:`<p>לְסַבְתָּא רוּת יֵשׁ גִּנָּה יָפָה מֵאֲחוֹרֵי הַבַּיִת.</p>
+<p>בַּגִּנָּה פְּרָחִים בְּכָל צֶבַע — אֲדֻמִּים, צְהֻבִּים וּסְגֻלִּים.</p>
+<p>כָּל בֹּקֶר סַבְתָּא שׁוֹקָה אֶת הַפְּרָחִים.</p>
+<p>דְּבוֹרִים וּפַרְפָּרִים עָפִים מִפֶּרַח לְפֶרַח.</p>
+<p>תַּמָּר עוֹזֶרֶת לְסַבְתָּא לְנַקּוֹת עַלִּים יְבֵשִׁים.</p>`,
+   qs:[{q:'מַה שֵׁם הַסַּבְתָּא?',a:'רות',kw:['רות']},
+       {q:'מָה סַבְתָּא עוֹשָׂה כָּל בֹּקֶר?',a:'שוקה את הפרחים',kw:['שוקה','מים','פרחים']},
+       {q:'מִי עָף בַּגִּנָּה?',a:'דבורים ופרפרים',kw:['דבורים','פרפרים']},
+       {q:'מָה תַּמָּר עוֹזֶרֶת לַעֲשׂוֹת?',a:'לנקות עלים',kw:['לנקות','עלים']}]},
+
+  {id:'s17',topic:'nature',art:'🌳🐦🍎',title:'עֵץ הַתַּפּוּחִים',
+   body:`<p>בַּגִּנָּה שֶׁל סַבָּא יֵשׁ עֵץ תַּפּוּחִים גָּדוֹל.</p>
+<p>בַּקַּיִץ הָעֵץ מָלֵא תַּפּוּחִים אֲדֻמִּים וִירֻקִּים.</p>
+<p>עוֹפוֹת קְטַנִּים יוֹשְׁבִים עַל הָעֵץ וְשָׁרִים בַּבֹּקֶר.</p>
+<p>שִׁי אוֹהֵב לְטַפֵּס עַל הָעֵץ וְלֶאֱכֹל תַּפּוּחַ טָרִי.</p>
+<p>סַבְתָּא אוֹמֶרֶת: "הָעֵץ הַזֶּה כְּבָר שִׁשִּׁים שָׁנָה כָּאן!"</p>`,
+   qs:[{q:'מָה גָּדֵל בַּגִּנָּה?',a:'עץ תפוחים',kw:['עץ','תפוחים']},
+       {q:'מָה עוֹשִׂים הָעוֹפוֹת?',a:'שרים',kw:['שרים','שיר']},
+       {q:'מָה שִׁי אוֹהֵב?',a:'לטפס ולאכול תפוח',kw:['לטפס','תפוח']},
+       {q:'כַּמָּה שָׁנִים הָעֵץ שָׁם?',a:'שישים',kw:['שישים','60']}]},
+
+  /* ── MINECRAFT ── */
+  {id:'s18',topic:'minecraft',art:'⛏️🏗️🌳',title:'הָעִיר שֶׁל סְטִיב',
+   body:`<p>סְטִיב בָּנָה עִיר גְּדוֹלָה בְּמִיינְקְרַפְט.</p>
+<p>בָּעִיר הָיוּ בָּתִּים מֵאֶבֶן, גַּשְׁרִים מֵעֵץ וְגִנּוֹת יְרֻקּוֹת.</p>
+<p>בַּמֶּרְכָּז עָמַד מִגְדָּל גָּבוֹהַּ עַד הַשָּׁמַיִם.</p>
+<p>סְטִיב עָמַל שָׁלוֹשׁ שָׁעוֹת כְּדֵי לִבְנוֹת אֶת הַמִּגְדָּל.</p>
+<p>כְּשֶׁגָּמַר הוּא שָׂמַח מְאֹד — הָעִיר הָיְתָה יָפָה וְחָזָקָה!</p>`,
+   qs:[{q:'מָה בָּנָה סְטִיב?',a:'עיר',kw:['עיר']},
+       {q:'מִמָּה הָיוּ הַגַּשְׁרִים?',a:'מעץ',kw:['עץ']},
+       {q:'מָה עָמַד בַּמֶּרְכָּז?',a:'מגדל גבוה',kw:['מגדל','גבוה']},
+       {q:'כַּמָּה שָׁעוֹת עָמַל?',a:'שלוש',kw:['שלוש','3']}]},
+
+  {id:'s19',topic:'minecraft',art:'⛏️🕯️💎',title:'הַמָּנְהֶרָה הָאֲפֵלָה',
+   body:`<p>אָלֶקְס חָפְרָה מָנְהֶרָה עֲמֻקָּה בָּאֲדָמָה.</p>
+<p>בַּמָּנְהֶרָה הָיָה חֹשֶׁךְ גָּדוֹל. הִיא שָׂמָה לַפִּידִים עַל הַקִּיר.</p>
+<p>פִּתְאוֹם הִיא מָצְאָה יַהֲלֹם כָּחֹל זוֹהֵר!</p>
+<p>אָלֶקְס לָקְחָה אֶת הַיַּהֲלֹם וְשָׂמְחָה מְאֹד.</p>
+<p>הִיא עָלְתָה לַמַּעְלָה וְסִפְּרָה לְסְטִיב עַל הַגִּלּוּי.</p>`,
+   qs:[{q:'מַה שֵׁם הַגִּבּוֹרָה?',a:'אלקס',kw:['אלקס']},
+       {q:'מָה שָׂמָה עַל הַקִּיר?',a:'לפידים',kw:['לפידים','לפיד']},
+       {q:'מָה מָצְאָה?',a:'יהלום כחול',kw:['יהלום','כחול']},
+       {q:'לְמִי סִפְּרָה?',a:'לסטיב',kw:['סטיב']}]},
+
+  {id:'s20',topic:'minecraft',art:'🟩⚔️🧟',title:'הַלַּיְלָה הַמָּפְחִיד',
+   body:`<p>בְּמִיינְקְרַפְט בָּא הַלַּיְלָה — וְאִתּוֹ צוֹרְרִים רָעִים.</p>
+<p>סְטִיב בָּנָה חוֹמָה גְּבוֹהָה מִסָּבִיב לַבַּיִת.</p>
+<p>הוּא שָׂם לַפִּידִים רַבִּים כְּדֵי שֶׁלֹּא יִהְיֶה חֹשֶׁךְ.</p>
+<p>הַצּוֹרְרִים בָּאוּ — אֲבָל לֹא יָכְלוּ לָבוֹא לַפְנִים!</p>
+<p>בַּבֹּקֶר שָׂמַח סְטִיב: "הַחוֹמָה עָזְרָה!"</p>`,
+   qs:[{q:'מָה בָּנָה סְטִיב מִסָּבִיב לַבַּיִת?',a:'חומה גבוהה',kw:['חומה','גבוהה']},
+       {q:'לָמָּה שָׂם לַפִּידִים?',a:'כדי שלא יהיה חושך',kw:['לפידים','חושך','אור']},
+       {q:'מִי בָּא בַּלַּיְלָה?',a:'צוררים',kw:['צוררים','רעים']},
+       {q:'מֶה קָרָה בַּבֹּקֶר?',a:'סטיב שמח שהחומה עזרה',kw:['שמח','חומה','עזרה']}]},
+
+  /* ── TORAH ── */
+  {id:'s21',topic:'tora',art:'🕯️🍞✨',title:'שַׁבָּת שָׁלוֹם',
+   body:`<p>בְּכָל שַׁבָּת הַמִּשְׁפָּחָה מִתְכַּנֶּסֶת יַחַד.</p>
+<p>אִמָּא מַדְלֶקֶת שְׁתֵּי נֵרוֹת וְאוֹמֶרֶת בְּרָכָה.</p>
+<p>אַבָּא מְבָרֵךְ עַל הַיַּיִן וְעַל שְׁתֵּי חַלּוֹת.</p>
+<p>הַיְּלָדִים שָׁרִים שִׁיר שַׁבָּת בְּקוֹל רָם וְשָׂמֵחַ.</p>
+<p>שַׁבָּת הִיא יוֹם מְיֻחָד וְקָדוֹשׁ בַּשָּׁבוּעַ.</p>`,
+   qs:[{q:'כַּמָּה נֵרוֹת מַדְלֶקֶת אִמָּא?',a:'שתיים',kw:['שתיים','שני','2']},
+       {q:'עַל מָה אַבָּא מְבָרֵךְ?',a:'על היין ועל החלות',kw:['יין','חלות']},
+       {q:'מָה עוֹשִׂים הַיְּלָדִים?',a:'שרים שיר שבת',kw:['שרים','שיר']},
+       {q:'אֵיזֶה יוֹם שַׁבָּת?',a:'מיוחד וקדוש',kw:['מיוחד','קדוש']}]},
+
+  {id:'s22',topic:'tora',art:'🚢🌈🕊️',title:'נֹחַ וְהַתֵּבָה',
+   body:`<p>נֹחַ הָיָה אִישׁ טוֹב. אֱלֹהִים אָמַר לוֹ: "בְּנֵה תֵּבָה מֵעֵץ."</p>
+<p>נֹחַ בָּנָה תֵּבָה וְהֵבִיא שְׁנַיִם מִכָּל בַּעַל חַיִּים.</p>
+<p>יָרַד גֶּשֶׁם אַרְבָּעִים יוֹם וְלַיְלָה.</p>
+<p>אַחֲרֵי הַגֶּשֶׁם שָׁלַח נֹחַ יוֹנָה לִרְאוֹת אִם יָבְשָׁה הָאֲדָמָה.</p>
+<p>הַיּוֹנָה חָזְרָה עִם עֲלֵה זַיִת. נֹחַ שָׂמַח!</p>`,
+   qs:[{q:'מִמָּה בָּנָה נֹחַ תֵּבָה?',a:'מעץ',kw:['עץ']},
+       {q:'כַּמָּה יָרַד גֶּשֶׁם?',a:'ארבעים יום',kw:['ארבעים','40']},
+       {q:'מָה שָׁלַח נֹחַ?',a:'יונה',kw:['יונה']},
+       {q:'מָה הֵבִיאָה הַיּוֹנָה?',a:'עלה זית',kw:['עלה','זית']}]},
+
+  {id:'s23',topic:'tora',art:'⭐🌙🏜️',title:'יוֹסֵף וְהַחֲלוֹמוֹת',
+   body:`<p>יוֹסֵף הָיָה יֶלֶד שֶׁאָהַב לַחֲלֹם חֲלוֹמוֹת.</p>
+<p>אַבָּא נָתַן לוֹ כְּתֹנֶת פַּסִּים יָפָה מְאֹד.</p>
+<p>יוֹסֵף חָלַם שֶׁכּוֹכָבִים מִשְׁתַּחֲוִים לוֹ.</p>
+<p>אַחַר כָּךְ יוֹסֵף הָפַךְ לְאִישׁ גָּדוֹל וְחָכָם בְּמִצְרַיִם.</p>
+<p>הוּא עָזַר לְהַרְבֵּה אֲנָשִׁים בִּזְמַן הָרָעָב.</p>`,
+   qs:[{q:'מָה נָתַן אַבָּא לְיוֹסֵף?',a:'כתונת פסים',kw:['כתונת','פסים']},
+       {q:'מָה חָלַם יוֹסֵף?',a:'שכוכבים משתחווים לו',kw:['כוכבים','חלם']},
+       {q:'לְאָן הָלַךְ יוֹסֵף?',a:'מצרים',kw:['מצרים']},
+       {q:'לְמִי עָזַר יוֹסֵף?',a:'לאנשים ברעב',kw:['אנשים','רעב']}]},
+
+  /* ── SPACE / ADVENTURE ── */
+  {id:'s24',topic:'space',art:'🚀🌙⭐',title:'מַסָּע אֶל הַיָּרֵחַ',
+   body:`<p>רוֹנִי חוֹלֶמֶת לִטְיֹס אֶל הַיָּרֵחַ.</p>
+<p>הִיא לוֹמֶדֶת מַתֵּמָטִיקָה וּמַדָּע כָּל יוֹם.</p>
+<p>יוֹם אֶחָד רוֹנִי הָיְתָה לְאַסְטְרוֹנָאוּטִית!</p>
+<p>הִיא עָלְתָה לַחֲלָלִית וְטָסָה בַּחָלָל הַשָּׁחוֹר.</p>
+<p>מֵהַחָלָל רוֹנִי רָאֲתָה אֶת כַּדּוּר הָאָרֶץ הַיָּפֶה.</p>
+<p>הִיא הִרְגִּישָׁה כָּל כָּךְ שְׂמֵחָה וּגְאֵה!</p>`,
+   qs:[{q:'מָה רוֹנִי חוֹלֶמֶת?',a:'לטוס אל הירח',kw:['לטוס','ירח','לטוס']},
+       {q:'מָה הִיא לוֹמֶדֶת?',a:'מתמטיקה ומדע',kw:['מתמטיקה','מדע']},
+       {q:'מָה רָאֲתָה מֵהַחָלָל?',a:'כדור הארץ',kw:['כדור','ארץ']},
+       {q:'אֵיךְ הִרְגִּישָׁה?',a:'שמחה וגאה',kw:['שמחה','גאה']}]},
+
+  {id:'s25',topic:'space',art:'🌟🪐🔭',title:'הַכּוֹכָב הַנִּסְתָּר',
+   body:`<p>בְּמַצְפֵּה הַכּוֹכָבִים עָבַד מַדְעָן שְׁמוֹ אֵלִי.</p>
+<p>כָּל לַיְלָה הוּא הִסְתַּכֵּל בַּטֶּלֶסְקוֹפּ עַל הַשָּׁמַיִם.</p>
+<p>לַיְלָה אֶחָד הוּא גִּלָּה כּוֹכָב חָדָשׁ קָטָן!</p>
+<p>אֵלִי שָׂמַח מְאֹד. הוּא קָרָא לַכּוֹכָב "אוֹרְלִי".</p>
+<p>הַמַּדָּעָנִים בְּכָל הָעוֹלָם שָׁמְעוּ עַל הַגִּלּוּי.</p>`,
+   qs:[{q:'מַה שֵׁם הַמַּדְעָן?',a:'אלי',kw:['אלי']},
+       {q:'בַּמֶּה הוּא הִסְתַּכֵּל?',a:'טלסקופ',kw:['טלסקופ']},
+       {q:'מָה גִּלָּה?',a:'כוכב חדש',kw:['כוכב','חדש']},
+       {q:'אֵיזֶה שֵׁם נָתַן לַכּוֹכָב?',a:'אורלי',kw:['אורלי']}]},
+
+  /* ── FOOD ── */
+  {id:'s26',topic:'food',art:'🍕👨‍🍳🍅',title:'הַפִּיצָּה הַמְּיֻחֶדֶת',
+   body:`<p>אַבָּא הֶחְלִיט לְהַכִין פִּיצָּה בַּבַּיִת.</p>
+<p>הוּא לָשׁ בָּצֵק וְשָׂם עֲלָיו רֹטֶב עַגְבָנִיּוֹת אָדֹם.</p>
+<p>הַיְּלָדִים עָזְרוּ לִפְזֵּר גְּבִינָה לְבָנָה עַל הַפִּיצָּה.</p>
+<p>הֵם שָׂמוּ זֵיתִים, פַּטְרִיּוֹת וְפַפְרִיקָה.</p>
+<p>הַפִּיצָּה נֶאֶפְתָה בַּתַּנּוּר עֶשְׂרִים דַּקּוֹת — וְיָצְאָה מְדַהֶּמֶת!</p>`,
+   qs:[{q:'מָה הֶחְלִיט אַבָּא לְהַכִין?',a:'פיצה',kw:['פיצה']},
+       {q:'מָה עָזְרוּ הַיְּלָדִים לְפַזֵּר?',a:'גבינה',kw:['גבינה']},
+       {q:'כַּמָּה זְמַן נֶאֶפְתָה?',a:'עשרים דקות',kw:['עשרים','20']},
+       {q:'מָה שָׂמוּ עַל הַפִּיצָּה?',a:'זיתים פטריות ופריקה',kw:['זיתים','פטריות','פריקה','פריקה']}]},
+
+  {id:'s27',topic:'food',art:'🎂🍰👩‍🍳',title:'הָעֻגָּה הַמַּדְהִימָה',
+   body:`<p>אִמָּא וְיוֹנָה אָפוּ עֻגַּת שׁוֹקוֹלָד לְיוֹם הֻלֶּדֶת סַבָּא.</p>
+<p>הֵם שָׂמוּ קֶמַח, סֻכָּר, בֵּיצִים וְשׁוֹקוֹלָד בַּקְּעָרָה.</p>
+<p>אִמָּא עִרְבְּבָה אֶת הַבָּלֶל וְשָׂמָה בַּתַּנּוּר.</p>
+<p>אַחֲרֵי חֲצִי שָׁעָה יָצְאָה עֻגָּה חֻמָּה וְרֵיחָהּ נִפְלָא.</p>
+<p>סַבָּא טָעַם וְאָמַר: "זֹאת הָעֻגָּה הַטְּעִימָה בָּעוֹלָם!"</p>`,
+   qs:[{q:'לְמִי אָפוּ אֶת הָעֻגָּה?',a:'לסבא',kw:['סבא']},
+       {q:'אֵיזֶה סוּג עֻגָּה?',a:'שוקולד',kw:['שוקולד']},
+       {q:'כַּמָּה זְמַן הָיְתָה בַּתַּנּוּר?',a:'חצי שעה',kw:['חצי','שעה']},
+       {q:'מָה אָמַר סַבָּא?',a:'הכי טעימה בעולם',kw:['טעימה','עולם']}]},
+
+  /* ── FRIENDSHIP ── */
+  {id:'s28',topic:'friendship',art:'🤝🌈💛',title:'הַחֲבֵרָה הַכִּי טוֹבָה',
+   body:`<p>טַלִי וְנוֹעָה הֵן חֲבֵרוֹת טוֹבוֹת מִגַּן הַיְּלָדִים.</p>
+<p>הֵן אוֹהֲבוֹת לִצְיֵּר יַחַד וּלְשַׂחֵק בְּבֻבּוֹת.</p>
+<p>יוֹם אֶחָד טַלִי הִרְגִּישָׁה עֲצוּבָה כִּי הֶחְמִיצָה מִשְׂחָק.</p>
+<p>נוֹעָה הֵבִיאָה לָהּ פֶּרַח קָטָן וְחִיְּבְקָה אוֹתָהּ.</p>
+<p>טַלִי חִיְּכָה: "תּוֹדָה, אַתְּ הַחֲבֵרָה הַכִּי טוֹבָה שֶׁלִּי!"</p>`,
+   qs:[{q:'מַה שְׁמוֹת הַחֲבֵרוֹת?',a:'טלי ונועה',kw:['טלי','נועה']},
+       {q:'מָה הֵן אוֹהֲבוֹת לַעֲשׂוֹת?',a:'לצייר ולשחק בבובות',kw:['לצייר','בובות']},
+       {q:'לָמָּה טַלִי הִרְגִּישָׁה עֲצוּבָה?',a:'הפסידה במשחק',kw:['הפסידה','החמיצה','משחק']},
+       {q:'מֶה הֵבִיאָה נוֹעָה?',a:'פרח קטן',kw:['פרח','קטן']}]},
+
+  {id:'s29',topic:'friendship',art:'🏠🌟🫂',title:'הַשָּׁכֵן הַחָדָשׁ',
+   body:`<p>מִשְׁפַּחַת כֹּהֵן עָבְרָה לַדִּירָה שֶׁמִּמּוּל.</p>
+<p>בְּנָם טוֹמֵר הָיָה בֶּן שֶׁבַע, כְּמוֹ רַז.</p>
+<p>רַז יָצָא לַמִּרְפֶּסֶת וְקָרָא: "שָׁלוֹם! אֲנִי רַז. מֶה שִׁמְךָ?"</p>
+<p>"טוֹמֵר!" עָנָה הַיֶּלֶד וְחִיֵּךְ.</p>
+<p>הֵם שִׂיחֲקוּ לֶגוֹ שָׁלוֹשׁ שָׁעוֹת וְהָיוּ לַחֲבֵרִים טוֹבִים.</p>`,
+   qs:[{q:'כַּמָּה שָׁנִים טוֹמֵר?',a:'שבע',kw:['שבע','7']},
+       {q:'מַה שֵׁם הַשָּׁכֵן?',a:'רז',kw:['רז']},
+       {q:'מֵאַיִן קָרָא רַז שָׁלוֹם?',a:'מהמרפסת',kw:['מרפסת']},
+       {q:'כַּמָּה שָׁעוֹת שִׂיחֲקוּ לֶגוֹ?',a:'שלוש',kw:['שלוש','3']}]},
+
+  {id:'s30',topic:'friendship',art:'🎨🖌️🌈',title:'הַצִּיּוּר הַמְּשֻׁתָּף',
+   body:`<p>בְּשִׁעוּר אוֹמָנוּת כָּל הַכִּתָּה צִיְּרָה יַחַד.</p>
+<p>רוֹן, מֵאָה וְשִׁי הֶחְלִיטוּ לְצַיֵּר יַחַד.</p>
+<p>רוֹן צִיֵּר שָׁמַיִם כְּחֻלִּים. מֵאָה — עֵצִים יְרֻקִּים.</p>
+<p>שִׁי צִיֵּר פְּרָחִים צְהֻבִּים וּשְׁמֶשׁ עִם חִיּוּךְ.</p>
+<p>הַמּוֹרָה אָמְרָה: "הַצִּיּוּר שֶׁלָּכֶם יָפֶה מְאֹד!"</p>`,
+   qs:[{q:'מָה רוֹן צִיֵּר?',a:'שמים כחולים',kw:['שמים','כחולים']},
+       {q:'מָה מֵאָה צִיְּרָה?',a:'עצים ירוקים',kw:['עצים','ירוקים']},
+       {q:'מָה שִׁי צִיֵּר?',a:'פרחים וש מש',kw:['פרחים','שמש']},
+       {q:'מָה אָמְרָה הַמּוֹרָה?',a:'שהציור יפה',kw:['יפה','ציור']}]},
+];
+
+// ════════════════════════════════════════
+//  READING MC
+// ════════════════════════════════════════
+
+const READ_MC = [
+  {id:'rm1',emoji:'🅰️',text:'מָה הָאוֹת הָרִאשׁוֹנָה בַּמִּלָּה: כֶּלֶב',answer:'כ',options:['כ','ל','ב','ד'],points:5},
+  {id:'rm2',emoji:'📝',text:'מָה הָאוֹת הָרִאשׁוֹנָה בַּמִּלָּה: שׁוּלְחָן',answer:'ש',options:['ש','ו','ל','ן'],points:5},
+  {id:'rm3',emoji:'🔤',text:'מָה הָאוֹת הָרִאשׁוֹנָה בַּמִּלָּה: בַּיִת',answer:'ב',options:['ב','י','ת','א'],points:5},
+  {id:'rm4',emoji:'✏️',text:'מָה הָאוֹת הָרִאשׁוֹנָה בַּמִּלָּה: אוֹר',answer:'א',options:['א','ו','ר','מ'],points:5},
+  {id:'rm5',emoji:'📚',text:'מָה הָאוֹת הָרִאשׁוֹנָה בַּמִּלָּה: יֶלֶד',answer:'י',options:['י','ל','ד','ה'],points:5},
+  {id:'rm6',emoji:'🐕',text:'אֵיזוֹ מִלָּה מַתְאִימָה? 🐕',answer:'כֶּלֶב',options:['חָתוּל','כֶּלֶב','דָּג','פִּיל'],points:5},
+  {id:'rm7',emoji:'☀️',text:'אֵיזוֹ מִלָּה מַתְאִימָה? ☀️',answer:'שֶׁמֶשׁ',options:['יָרֵחַ','שֶׁמֶשׁ','כּוֹכָב','עָנָן'],points:5},
+  {id:'rm8',emoji:'🏠',text:'אֵיזוֹ מִלָּה מַתְאִימָה? 🏠',answer:'בַּיִת',options:['בַּיִת','בֵּית-סֵפֶר','גַּן','מִגְדָּל'],points:5},
+  {id:'rm9',emoji:'🎵',text:'מָה מִתְחָרֵז עִם "שֶׁמֶשׁ"?',answer:'נֶפֶשׁ',options:['כֶּלֶב','נֶפֶשׁ','דָּג','עֵץ'],points:8},
+  {id:'rm10',emoji:'🎵',text:'מָה מִתְחָרֵז עִם "בַּיִת"?',answer:'דַּיִת',options:['חָתוּל','עֵץ','דַּיִת','שֶׁמֶשׁ'],points:8},
+  {id:'rm11',emoji:'📝',text:'מָה הַהֶפֵּךְ שֶׁל "גָּדוֹל"?',answer:'קָטָן',options:['רָע','קָטָן','חָם','שָׁחוֹר'],points:7},
+  {id:'rm12',emoji:'📝',text:'מָה הַהֶפֵּךְ שֶׁל "חַם"?',answer:'קַר',options:['קַר','גָּדוֹל','שָׂמֵחַ','לָבָן'],points:7},
+  {id:'rm13',emoji:'🔤',text:'כַּמָּה אוֹתִיּוֹת בַּמִּלָּה: כֶּלֶב',answer:'3',options:['2','3','4','5'],points:6},
+  {id:'rm14',emoji:'🔤',text:'כַּמָּה אוֹתִיּוֹת בַּמִּלָּה: שׁוּלְחָן',answer:'5',options:['4','5','6','7'],points:6},
+  {id:'rm15',emoji:'📖',text:'כַּמָּה מִלִּים בַּמִּשְׁפָּט: "הַיֶּלֶד אוֹהֵב כַּדּוּרֶגֶל"',answer:'3',options:['2','3','4','5'],points:8},
+  {id:'rm16',emoji:'🤔',text:'בְּאֵיזֶה אוֹת מַתְחִיל שִׁמְךָ? גַּבְרִיאֵל',answer:'ג',options:['ד','ג','ב','א'],points:5},
+  {id:'rm17',emoji:'🔡',text:'הַשְׁלֵם: _ָפֶּה',answer:'ק',options:['ק','כ','פ','ג'],points:7,hint:'רֶמֶז: מָקוֹם שֶׁשּׁוֹתִים קָפֶה ☕'},
+  {id:'rm18',emoji:'🔡',text:'הַשְׁלֵם: מַ_ָּיִם',answer:'י',options:['ו','י','א','ה'],points:7,hint:'רֶמֶז: שׁוֹתִים אֶת זֶה 💧'},
+  {id:'rm19',emoji:'🌳',text:'אֵיזוֹ מִלָּה מַתְאִימָה? 🌳',answer:'עֵץ',options:['פֶּרַח','דֶּשֶׁא','עֵץ','עָלֶה'],points:5},
+  {id:'rm20',emoji:'🐟',text:'אֵיזוֹ מִלָּה מַתְאִימָה? 🐟',answer:'דָּג',options:['דָּב','דָּג','חָתוּל','עוֹף'],points:5},
+];
+
+// ════════════════════════════════════════
+//  READ TOPICS CONFIG
+// ════════════════════════════════════════
+
+
+// ══════════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════════
+const ADMIN_CODE='2026',PRIZE_AT=100;
+const DEFAULT_PRIZES=[
+  'זמן מסך 📱',
+  'חטיף מיוחד 🍫',
+  'זמן טאבלט 📲',
+  'לבחור מה רואים בטלוויזיה 📺',
+  'חיבוק ונשיקה ראשון בלילה 🤗',
+  'זמן משחק באקסבוקס 🎮',
+  'לבחור מה אוכלים לארוחת צהריים 🍽️',
+  'פופקורן בסלון 🍿',
+  'לנסוע ברולרבליידס 🛼',
+  'לנסוע באופניים 🚲',
+  'לבנות פזל עם אבא או אמא 🧩',
+  'משחק נגד אבא או אמא באקסבוקס 🎮🆚',
+  'לבחור שיר ולשמוע בסלון 🎵',
+  'לבחור ספר — אבא או אמא קוראים לפני השינה 📖',
+  'לקרוא לחבר לשחק 👦',
+  'לרדת לפארק 🌳',
+];
+// prizes can be customized per-player, stored in state
+function getPrizes(){ return (S.customPrizes && S.customPrizes.length) ? S.customPrizes : DEFAULT_PRIZES; }
+
+// ══════════════════════════════════════════════════════
+//  STATE (per player)
+// ══════════════════════════════════════════════════════
+let PLAYER='';
+let S={score:0,total:0,prizes:[],streak:0,mathN:0,
+  storyDone:{},storyAnswers:{},rqDone:{},
+  curStory:null,sqIdx:0,kbdMode:'heb',judApproved:false,
+  customPrizes:[],answered:false,mathType:null};
+
+function stateKey(){return 'gab5_'+(PLAYER||'default');}
+function loadS(name){
+  PLAYER=name||'';
+  try{const d=localStorage.getItem(stateKey());if(d){const p=JSON.parse(d);S={...S,...p};}}catch(e){}
+  if(!S.storyAnswers)S.storyAnswers={};
+  if(!S.mathN)S.mathN=0;
+}
+function saveS(){try{localStorage.setItem(stateKey(),JSON.stringify(S));}catch(e){}}
+
+// ══════════════════════════════════════════════════════
+//  PLAYER / WELCOME
+// ══════════════════════════════════════════════════════
+function startWithName(){
+  const raw=document.getElementById('nameInp').value.trim();
+  const name=raw||'חבר';
+  loadS(name);
+  localStorage.setItem('gab5_lastPlayer',name);
+  set('pName',name);
+  const hdr=document.getElementById('hdrName');
+  hdr.innerHTML=name+' 🌟<span>מסע הלמידה שלי</span>';
+  updateUI();
+  showScr('homeScr');
+}
+
+// ══════════════════════════════════════════════════════
+//  UI CORE
+// ══════════════════════════════════════════════════════
+function showScr(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);if(el)el.classList.add('active');
+  if(typeof PREVIEW!=='undefined' && PREVIEW && id!=='parentScr') applyPreviewDim();
+}
+function toggleAdmin(id){document.getElementById(id).classList.toggle('open');}
+
+const MED=[{s:50,i:'🥉'},{s:100,i:'🥈'},{s:200,i:'🥇'},{s:300,i:'🏆'},{s:500,i:'👑'}];
+function updateUI(){
+  set('scoreNum',S.score);
+  const pct=Math.min(100,(S.score/PRIZE_AT)*100);
+  document.getElementById('progFill').style.width=pct+'%';
+  const left=Math.max(0,PRIZE_AT-S.score);
+  document.getElementById('progTxt').textContent=left>0?`עוד ${left} נקודות לפרס! 🎁`:'🎁 קיבלת פרס! הראה לאבא!';
+  const r=document.getElementById('medalsRow');r.innerHTML='';
+  MED.forEach(m=>{const d=mk('div','medal'+(S.total>=m.s?' on':''));d.title=m.s+'נק';d.textContent=m.i;r.appendChild(d);});
+  const stLeft=STORIES.filter(s=>!S.storyDone[s.id]).length;
+  set('readCntHome',stLeft+' סיפורים זמינים');
+  set('judStatus',S.judApproved?'✅ פתוח':'🔒 ממתין לאישור');
+}
+
+function ptsPop(n){const el=document.getElementById('ptsPop');el.textContent='+'+n+' נקודות! 🌟';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1200);}
+function addScore(n){
+  if(PREVIEW) return; // never score in preview
+  S.score+=n;S.total+=n;updateUI();ptsPop(n);saveS();if(S.score>=PRIZE_AT)setTimeout(showPrize,900);
+}
+
+function showPrize(){
+  const PRIZES=getPrizes();
+  const lastPrize=S.prizes.length ? S.prizes[S.prizes.length-1] : null;
+  const pool=lastPrize ? PRIZES.filter(p=>p!==lastPrize) : PRIZES;
+  const p=(pool.length?pool:PRIZES)[Math.floor(Math.random()*(pool.length||PRIZES.length))];
+  S.prizes.push(p);
+  if(S.prizes.length>20) S.prizes=S.prizes.slice(-20);
+  set('prizeName',p);showScr('prizeScr');saveS();
+}
+
+function doPreviewBtn(inpId,msgId){
+  const el=document.getElementById(inpId);if(!el)return;
+  const v=el.value.trim(),m=document.getElementById(msgId);
+  if(v!==ADMIN_CODE){if(m){m.textContent='❌ קוד שגוי';m.className='adm-msg err';}return;}
+  el.value='';if(m){m.textContent='';m.className='adm-msg';}
+  startPreviewMode();
+}
+function doReset(inpId,msgId,goHome){
+  const el=document.getElementById(inpId);if(!el)return;
+  const v=el.value.trim(),m=document.getElementById(msgId);
+  if(v===ADMIN_CODE){
+    S.score=0;saveS();updateUI();
+    if(m){m.textContent='✅ הנקודות אופסו!';m.className='adm-msg ok';}
+    el.value='';
+    if(goHome)setTimeout(()=>showScr('homeScr'),1600);
+  }else{if(m){m.textContent='❌ קוד שגוי';m.className='adm-msg err';}}
+}
+function doFullReset(inpId,msgId){
+  const el=document.getElementById(inpId);if(!el)return;
+  const v=el.value.trim();
+  const m=document.getElementById(msgId);
+  if(v!==ADMIN_CODE){if(m){m.textContent='❌ קוד שגוי';m.className='adm-msg err';}return;}
+  el.value='';
+  // Show custom confirm dialog
+  const overlay=document.getElementById('confirmOverlay');
+  overlay.style.display='flex';
+  document.getElementById('confirmNo').onclick=()=>{overlay.style.display='none';};
+  document.getElementById('confirmYes').onclick=()=>{
+    overlay.style.display='none';
+    const judApproved=S.judApproved;
+    S={score:0,total:0,prizes:[],streak:0,mathN:0,
+      storyDone:{},storyAnswers:{},rqDone:{},
+      curStory:null,sqIdx:0,kbdMode:'heb',
+      judApproved:judApproved,answered:false,mathType:null};
+    saveS();updateUI();
+    document.getElementById('ap1').classList.remove('open');
+    if(m){m.textContent='✅ איפוס מלא בוצע!';m.className='adm-msg ok';}
+    setTimeout(()=>showScr('homeScr'),1000);
+  };
+}
+
+// ══════════════════════════════════════════
+//  PREVIEW MODE — parent browses all content
+// ══════════════════════════════════════════
+let PREVIEW=false; // true = parent preview, buttons disabled
+
+function enterPreviewMode(){
+  PREVIEW=true;
+  // inject preview bar
+  if(!document.getElementById('previewBar')){
+    const bar=document.createElement('div');
+    bar.id='previewBar';
+    bar.style.cssText='position:fixed;bottom:0;left:0;right:0;background:#f7c948;color:#0f0f1a;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;z-index:9999;font-family:Heebo,sans-serif;font-weight:700;font-size:.9rem;direction:rtl';
+    bar.innerHTML='<span>👁️ מצב צפייה — הורה</span><button onclick="exitPreviewMode()" style="background:#0f0f1a;color:#f7c948;border:none;border-radius:8px;padding:6px 14px;cursor:pointer;font-family:Heebo,sans-serif;font-weight:700">✕ יציאה</button>';
+    document.body.appendChild(bar);
+    // add bottom padding so bar doesn't cover content
+    document.querySelector('.wrap').style.paddingBottom='60px';
+  }
+  // disable answer buttons / inputs
+  document.querySelectorAll('.mc-btn,.sub-btn,.next-btn').forEach(b=>{
+    if(!b.closest('#previewBar') && b.textContent!=='✕ יציאה')
+      b.style.opacity='.45';
+  });
+  document.querySelectorAll('.ans-inp,.heb-kbd,.kbd-toggle').forEach(el=>el.style.display='none');
+}
+
+function exitPreviewMode(){
+  PREVIEW=false;
+  const bar=document.getElementById('previewBar');if(bar)bar.remove();
+  document.querySelector('.wrap').style.paddingBottom='';
+  document.querySelectorAll('.mc-btn,.sub-btn,.next-btn').forEach(b=>b.style.opacity='');
+  document.querySelectorAll('.ans-inp').forEach(el=>el.style.display='');
+  document.querySelectorAll('.kbd-toggle').forEach(el=>el.style.display='flex');
+  showScr('homeScr');
+}
+
+function applyPreviewDim(){
+  if(!PREVIEW) return;
+  setTimeout(()=>{
+    // Dim answer buttons and submit buttons — not next buttons
+    document.querySelectorAll('.mc-btn,.sub-btn').forEach(b=>{
+      if(!b.closest('#previewBar'))
+        b.style.opacity='.4';
+    });
+    // Show ALL next buttons so parent can always navigate forward
+    document.querySelectorAll('.next-btn').forEach(b=>{
+      if(!b.closest('#previewBar') && b.textContent!=='✕ יציאה'){
+        b.style.display='block';
+        b.style.opacity='1';
+      }
+    });
+    // Hide input areas
+    document.querySelectorAll('.ans-inp').forEach(el=>el.style.display='none');
+    document.querySelectorAll('.heb-kbd,.kbd-toggle').forEach(el=>el.style.display='none');
+    // Add preview label to feedback areas if empty
+    document.querySelectorAll('.fb').forEach(fb=>{
+      if(!fb.textContent.trim()){
+        fb.textContent='👁️ מצב צפייה';
+        fb.className='fb hint';
+      }
+    });
+  },60);
+}
+
+function startPreviewMode(){
+  document.getElementById('ap1').classList.remove('open');
+  enterPreviewMode();
+  showScr('homeScr');
+}
+
+function renderStreak(id){const b=document.getElementById(id);if(!b)return;b.innerHTML='';for(let i=0;i<5;i++){const d=mk('div','sd'+(i<S.streak?' on':''));b.appendChild(d);}}
+
+// ══════════════════════════════════════════════════════
+//  MATH GENERATOR
+// ══════════════════════════════════════════════════════
+function genMQ(type){
+  const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+  const W=(c,n,mn,mx,st=1)=>{const s=new Set();let t=0;while(s.size<n&&t<300){t++;let v=c+(Math.random()<.5?1:-1)*R(1,5)*st;v=Math.round(v/st)*st;if(v!==c&&v>=mn&&v<=mx)s.add(v);}return[...s];};
+  let a,b,ans,text,opts;
+  if(type==='add1'){a=R(1,10);b=R(1,10);ans=a+b;text=`${a} + ${b} = ?`;opts=shuf([ans,...W(ans,3,1,20)]).map(String);}
+  else if(type==='sub1'){b=R(1,9);a=R(b,b+9);ans=a-b;text=`${a} − ${b} = ?`;opts=shuf([ans,...W(ans,3,0,18)]).map(String);}
+  else if(type==='mix1'){if(Math.random()<.5){a=R(1,10);b=R(1,10);ans=a+b;text=`${a} + ${b} = ?`;}else{b=R(1,9);a=R(b,b+9);ans=a-b;text=`${a} − ${b} = ?`;}opts=shuf([ans,...W(ans,3,0,20)]).map(String);}
+  else if(type==='tens'){const T=[10,20,30,40,50,60,70,80,90,100];if(Math.random()<.55){a=T[R(0,7)];b=T[R(0,7)];ans=a+b;text=`${a} + ${b} = ?`;}else{b=T[R(0,4)];a=T[R(3,9)];ans=a-b;if(ans<=0){a=T[5];b=T[2];ans=a-b;}text=`${a} − ${b} = ?`;}opts=shuf([ans,...W(ans,3,0,200,10)]).map(String);}
+  else if(type==='hund'){const H=[100,200,300,400,500,600,700,800,900,1000];if(Math.random()<.5){a=H[R(0,7)];b=H[R(0,7)];ans=a+b;text=`${a} + ${b} = ?`;}else{b=H[R(0,4)];a=H[R(3,9)];ans=a-b;if(ans<=0){a=H[5];b=H[2];ans=a-b;}text=`${a} − ${b} = ?`;}opts=shuf([ans,...W(ans,3,0,2000,100)]).map(String);}
+  else{const R2=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const base=R2(1,15);let pool=[base,base+R2(1,5),base+R2(6,12)];if(base>1)pool.push(base-R2(1,Math.min(base-1,4)));pool=[...new Set(pool)].filter(x=>x>0).sort((x,y)=>x-y);while(pool.length<4)pool.push(pool[pool.length-1]+1);if(Math.random()<.5){text=`מָה הַגָּדוֹל?\n${pool.join('   ')}`;ans=String(Math.max(...pool));}else{text=`מָה הַקָּטָן?\n${pool.join('   ')}`;ans=String(Math.min(...pool));}opts=shuf(pool).map(String);}
+  const pts={add1:5,sub1:5,mix1:6,tens:8,hund:10,cmp:7}[type]||5;
+  return{text,answer:ans,options:opts,points:pts};
+}
+
+let curMQ=null;
+function startMath(type){
+  S.mathType=type;S.answered=false;
+  const lbl={add1:'➕ חיבור',sub1:'➖ חיסור',mix1:'🔀 מעורב',tens:'💯 עשרות',hund:'🔢 מאות-אלפים',cmp:'⚖️ השוואה'};
+  set('mathBadge',lbl[type]);showScr('mathScr');loadMQ();
+}
+function loadMQ(){
+  S.answered=false;const q=genMQ(S.mathType);curMQ=q;S.mathN++;
+  set('mQNum','תרגיל מספר '+S.mathN);set('mQTxt',q.text);
+  set('mFb','');cls('mFb','fb');hide('mNext');
+  const g=document.getElementById('mAns');g.innerHTML='';
+  shuf([...q.options]).forEach(o=>{const b=mk('button','mc-btn',o);b.style.direction='ltr';b.onclick=()=>checkMQ(o,b);g.appendChild(b);});
+  renderStreak('stk1');
+  if(PREVIEW) show('mNext');
+}
+function checkMQ(sel,btn){
+  if(S.answered)return;S.answered=true;
+  const ok=String(sel)===String(curMQ.answer);
+  qa('#mAns .mc-btn',b=>{b.disabled=true;if(String(b.textContent)===String(curMQ.answer))b.classList.add('correct');});
+  if(ok){btn.classList.add('correct');S.streak=Math.min(S.streak+1,5);addScore(curMQ.points);set('mFb',rndMsg());cls('mFb','fb ok');}
+  else{btn.classList.add('wrong');S.streak=0;set('mFb','לא נכון... '+curMQ.answer+' 💪');cls('mFb','fb err');}
+  renderStreak('stk1');saveS();show('mNext');
+}
+function nextMath(){loadMQ();}
+
+// ══════════════════════════════════════════════════════
+//  READING TOPICS
+// ══════════════════════════════════════════════════════
+const RTOPICS=[
+  {topic:'sport',icon:'⚽',name:'ספורט'},{topic:'animal',icon:'🐶',name:'חיות'},
+  {topic:'hero',icon:'🦸',name:'גיבורי-על'},{topic:'kids',icon:'👫',name:'ילדים'},
+  {topic:'nature',icon:'🌳',name:'טבע'},{topic:'minecraft',icon:'⛏️',name:'מיינקרפט'},
+  {topic:'tora',icon:'📜',name:'תורה'},{topic:'space',icon:'🚀',name:'חלל'},
+  {topic:'food',icon:'🍕',name:'אוכל'},{topic:'friendship',icon:'🤝',name:'חברות'},
+  {topic:'letters',icon:'🔤',name:'אותיות',type:'mc'},
+  {topic:'complete',icon:'🔡',name:'השלמת מילים',type:'wc'},
+  {topic:'picture',icon:'🖼️',name:'תמונה→מילה',type:'pw'},
+  {topic:'opposites',icon:'↔️',name:'הפכים',type:'opp'},
+];
+
+function buildReadTopics(){
+  const g=document.getElementById('readTopicGrid');g.innerHTML='';
+  RTOPICS.forEach(t=>{
+    const b=mk('button','topic-btn');
+    if(t.type==='mc'){
+      const l=READ_MC.filter(q=>!S.rqDone[q.id]).length;
+      b.innerHTML=`<div class="t-icon">${t.icon}</div><div class="t-name">${t.name}</div><div class="t-sub">${l?l+' שאלות':'✅ סיימת!'}</div>`;
+      b.onclick=()=>startReadMC();
+    }else if(t.type==='wc'){
+      b.innerHTML=`<div class="t-icon">${t.icon}</div><div class="t-name">${t.name}</div><div class="t-sub">השלם אות חסרה</div>`;
+      b.onclick=()=>startWC();
+    }else if(t.type==='pw'){
+      b.innerHTML=`<div class="t-icon">${t.icon}</div><div class="t-name">${t.name}</div><div class="t-sub">זהה מילה לתמונה</div>`;
+      b.onclick=()=>startPW();
+    }else if(t.type==='opp'){
+      b.innerHTML=`<div class="t-icon">${t.icon}</div><div class="t-name">${t.name}</div><div class="t-sub">מה ההפך?</div>`;
+      b.onclick=()=>startOpp();
+    }else{
+      const stories=STORIES.filter(s=>s.topic===t.topic);
+      const left=stories.filter(s=>!S.storyDone[s.id]).length;
+      b.innerHTML=`<div class="t-icon">${t.icon}</div><div class="t-name">${t.name}</div><div class="t-sub">${stories.length?(left?left+' סיפורים':'✅ סיימת!'):'בקרוב'}</div>`;
+      if(stories.length)b.onclick=()=>startStoryTopic(t.topic);
+    }
+    g.appendChild(b);
+  });
+}
+
+// ══════════════════════════════════════════════════════
+//  STORY FLOW — answers persist when returning to story
+// ══════════════════════════════════════════════════════
+function startStoryTopic(topic){
+  const av=STORIES.filter(s=>s.topic===topic&&!S.storyDone[s.id]);
+  if(!av.length){alert('סיימת את כל הסיפורים בנושא הזה! 🎉 נסה נושא אחר.');return;}
+  const story=av[Math.floor(Math.random()*av.length)];
+  // New story? reset index + clear saved answers
+  if(S.curStory!==story.id){
+    S.curStory=story.id;S.sqIdx=0;
+    if(!S.storyAnswers)S.storyAnswers={};
+    S.storyAnswers[story.id]={};
+    saveS();
+  }
+  showStory(story);
+}
+function showStory(story){
+  set('sArt',story.art);set('sTitle',story.title);
+  document.getElementById('sBody').innerHTML=story.body;
+  set('storyBadge','📖 '+story.title);
+  showScr('storyScr');
+}
+function backToStory(){
+  const story=STORIES.find(s=>s.id===S.curStory);
+  if(story)showStory(story);else showScr('readTopicScr');
+}
+function goStoryQs(){
+  buildHebKbd();
+  switchKbd(S.kbdMode||'heb');
+  showScr('sqScr');loadSQ();
+}
+function loadSQ(){
+  const story=STORIES.find(s=>s.id===S.curStory);
+  const qs=story.qs;
+  document.querySelectorAll('#sqScr .dyn-btn').forEach(b=>b.remove());
+  if(S.sqIdx>=qs.length){
+    if(!PREVIEW){S.storyDone[S.curStory]=true;saveS();updateUI();}
+    set('sqFb',PREVIEW?'סוף שאלות — מצב צפייה 👁️':'🎉 סיימת את כל השאלות! מעולה!');
+    cls('sqFb',PREVIEW?'fb hint':'fb ok');
+    hide('sqNext');
+    document.getElementById('sqInp').style.display='none';
+    document.getElementById('hebKbd').style.display='none';
+    document.querySelectorAll('.kbd-toggle').forEach(el=>el.style.display='none');
+    const bb=mk('button','next-btn dyn-btn','← חזרה לנושאים');
+    bb.onclick=()=>{showScr('readTopicScr');buildReadTopics();};
+    document.getElementById('sqScr').appendChild(bb);
+    return;
+  }
+  if(!S.storyAnswers)S.storyAnswers={};
+  if(!S.storyAnswers[S.curStory])S.storyAnswers[S.curStory]={};
+  const saved=S.storyAnswers[S.curStory][S.sqIdx];
+  const wasAnswered=!!(saved&&saved.answered);
+  S.answered=wasAnswered;
+  const q=qs[S.sqIdx];
+  const pd=document.getElementById('qprog');pd.innerHTML='';
+  qs.forEach((_,i)=>{pd.appendChild(mk('div','qd'+(i<S.sqIdx?' done':i===S.sqIdx?' cur':'')));});
+  set('sqNum','שאלה '+(S.sqIdx+1)+' מתוך '+qs.length);set('sqTxt',q.q);
+  const inp=document.getElementById('sqInp');
+
+  if(PREVIEW){
+    // Preview: show question + correct answer, no input
+    inp.style.display='none';
+    document.getElementById('hebKbd').style.display='none';
+    document.querySelectorAll('.kbd-toggle').forEach(el=>el.style.display='none');
+    set('sqFb','✅ תשובה: '+q.a);cls('sqFb','fb hint');
+    set('sqSaved','👁️ מצב צפייה — לא נרשמת תשובה');
+    show('sqNext');
+  }else{
+    inp.style.display='block';inp.value=saved?saved.text||'':'';
+    document.querySelectorAll('.kbd-toggle').forEach(el=>el.style.display='flex');
+    switchKbd(S.kbdMode||'heb');
+    if(wasAnswered){
+      inp.readOnly=true;
+      set('sqFb',saved.correct?rndMsg():`לא ממש... תשובה: "${q.a}" 💪`);
+      cls('sqFb',saved.correct?'fb ok':'fb err');
+      set('sqSaved','✅ שאלה זו כבר נענתה');
+      show('sqNext');
+    }else{
+      inp.readOnly=false;
+      set('sqFb','');cls('sqFb','fb');set('sqSaved','');hide('sqNext');
+    }
+  }
+  renderStreak('stk2');
+}
+function checkSQ(){
+  if(S.answered||PREVIEW)return; // never answer in preview
+  const story=STORIES.find(s=>s.id===S.curStory);
+  const q=story.qs[S.sqIdx];
+  const raw=document.getElementById('sqInp').value.trim();
+  if(!raw){set('sqFb','כתוב תשובה! ✏️');cls('sqFb','fb hint');return;}
+  S.answered=true;
+  const norm=s=>s.replace(/['",.!?״׳]/g,'').toLowerCase();
+  const ok=q.kw.some(kw=>norm(raw).includes(norm(kw)));
+  if(!S.storyAnswers)S.storyAnswers={};
+  if(!S.storyAnswers[S.curStory])S.storyAnswers[S.curStory]={};
+  S.storyAnswers[S.curStory][S.sqIdx]={text:raw,answered:true,correct:ok};
+  if(ok){S.streak=Math.min(S.streak+1,5);addScore(8);set('sqFb',rndMsg());cls('sqFb','fb ok');}
+  else{S.streak=0;set('sqFb',`לא ממש... תשובה: "${q.a}" 💪`);cls('sqFb','fb err');}
+  renderStreak('stk2');saveS();show('sqNext');
+}
+function nextSQ(){S.sqIdx++;loadSQ();}
+
+// KEYBOARD
+function buildHebKbd(){
+  const kbd=document.getElementById('hebKbd');kbd.innerHTML='';
+  const reg='אבגדהוזחטיכלמנסעפצקרשת',fin='םןךףץ';
+  [...reg].forEach(l=>{const b=mk('button','hk',l);b.onclick=()=>{const i=document.getElementById('sqInp');if(!i.readOnly)i.value+=l;};kbd.appendChild(b);});
+  [...fin].forEach(l=>{const b=mk('button','hk fin',l);b.onclick=()=>{const i=document.getElementById('sqInp');if(!i.readOnly)i.value+=l;};kbd.appendChild(b);});
+  const sp=mk('button','hk sp','רווח');sp.onclick=()=>{const i=document.getElementById('sqInp');if(!i.readOnly)i.value+=' ';};kbd.appendChild(sp);
+  const dl=mk('button','hk del','⌫');dl.onclick=()=>{const i=document.getElementById('sqInp');if(!i.readOnly)i.value=i.value.slice(0,-1);};kbd.appendChild(dl);
+  [0,1,2,3,4,5,6,7,8,9].forEach(n=>{const b=mk('button','hk num',String(n));b.onclick=()=>{const i=document.getElementById('sqInp');if(!i.readOnly)i.value+=n;};kbd.appendChild(b);});
+}
+function switchKbd(mode){
+  S.kbdMode=mode;
+  const inp=document.getElementById('sqInp');
+  const kbd=document.getElementById('hebKbd');
+  const tH=document.getElementById('kbdTabH'),tS=document.getElementById('kbdTabS');
+  if(mode==='heb'){inp.readOnly=true;kbd.style.display='grid';tH.classList.add('active');tS.classList.remove('active');}
+  else{inp.readOnly=false;kbd.style.display='none';tS.classList.add('active');tH.classList.remove('active');inp.focus();}
+}
+
+// READ MC
+let curRQ=null,rPool=[];
+function startReadMC(){rPool=READ_MC.filter(q=>!S.rqDone[q.id]);if(!rPool.length){alert('סיימת! 🎉');return;}showScr('rqScr');loadRQ();}
+function loadRQ(){
+  if(!rPool.length){set('rqFb','🎉 סיימת!');return;}
+  S.answered=false;const q=rPool[Math.floor(Math.random()*rPool.length)];curRQ=q;
+  set('rqNum','שאלת קריאה');set('rqEmoji',q.emoji||'');set('rqTxt',q.text);set('rqHint',q.hint||'');
+  set('rqFb','');cls('rqFb','fb');hide('rqNext');
+  const g=document.getElementById('rqAns');g.innerHTML='';
+  shuf([...q.options]).forEach(o=>{const b=mk('button','mc-btn',o);b.onclick=()=>checkRQ(o,b);g.appendChild(b);});
+  renderStreak('stk3');
+  if(PREVIEW) show('rqNext');
+}
+function checkRQ(sel,btn){
+  if(S.answered)return;S.answered=true;
+  const ok=String(sel)===String(curRQ.answer);
+  qa('#rqAns .mc-btn',b=>{b.disabled=true;if(String(b.textContent)===String(curRQ.answer))b.classList.add('correct');});
+  if(ok){btn.classList.add('correct');S.streak=Math.min(S.streak+1,5);S.rqDone[curRQ.id]=true;addScore(curRQ.points);set('rqFb',rndMsg());cls('rqFb','fb ok');}
+  else{btn.classList.add('wrong');S.streak=0;set('rqFb','לא נכון... '+curRQ.answer+' 💪');cls('rqFb','fb err');}
+  renderStreak('stk3');saveS();show('rqNext');
+}
+function nextRQ(){rPool=READ_MC.filter(q=>!S.rqDone[q.id]);if(!rPool.length){set('rqFb','🎉 סיימת!');hide('rqNext');return;}loadRQ();}
+
+// WORD COMPLETE
+const WC_Q=[
+  {display:'כֶּ__ֶב',missing:'ל',clue:'🐕 נובח',options:['ל','מ','ר','פ'],pts:7},
+  {display:'בַּ__ִת',missing:'י',clue:'🏠 גרים שם',options:['י','א','ו','ה'],pts:7},
+  {display:'שֶׁ__ֶשׁ',missing:'מ',clue:'☀️ מאירה',options:['מ','ר','ל','ב'],pts:7},
+  {display:'יֶ__ֶד',missing:'ל',clue:'👦 ילד קטן',options:['ל','מ','ר','פ'],pts:7},
+  {display:'עֵ__',missing:'ץ',clue:'🌳 צומח',options:['ץ','ן','ם','ף'],pts:7},
+  {display:'דָּ__',missing:'ג',clue:'🐟 שוחה',options:['ג','ב','ד','כ'],pts:7},
+  {display:'אִ__ָּא',missing:'מ',clue:'👩 אמא',options:['מ','א','פ','ג'],pts:7},
+  {display:'אַבָּ__',missing:'א',clue:'👨 אבא',options:['א','מ','פ','ג'],pts:7},
+  {display:'מַ__ִּים',missing:'י',clue:'💧 שותים',options:['י','א','ו','ה'],pts:7},
+  {display:'סֵ__ֶר',missing:'פ',clue:'📚 קוראים בו',options:['פ','ב','כ','ד'],pts:7},
+  {display:'כִּ__ָּה',missing:'ת',clue:'📐 לומדים שם',options:['ת','ד','ר','ס'],pts:7},
+  {display:'חָ__וּל',missing:'ת',clue:'🐱 מיאו',options:['ת','כ','פ','ב'],pts:7},
+  {display:'גַּ__',missing:'ן',clue:'🌸 פרחים שם',options:['ן','ם','ף','ך'],pts:7},
+  {display:'כַּ__וּר',missing:'ד',clue:'⚽ משחקים',options:['ד','ב','ג','ז'],pts:7},
+  {display:'שָׁ__ַיִם',missing:'מ',clue:'🌤️ למעלה',options:['מ','ל','נ','ר'],pts:7},
+  {display:'חָ__ֵר',missing:'ב',clue:'🤝 חבר טוב',options:['ב','כ','פ','ד'],pts:7},
+  {display:'עִי__',missing:'ר',clue:'🏙️ עיר גדולה',options:['ר','ל','נ','ד'],pts:7},
+  {display:'מוֹ__ֶה',missing:'ר',clue:'👩‍🏫 מלמד/ת',options:['ר','ל','נ','ד'],pts:7},
+];
+let wcPool=[],curWC=null;
+function startWC(){wcPool=shuf([...WC_Q]);showScr('wcScr');loadWC();}
+function loadWC(){
+  if(!wcPool.length){set('wcFb','🎉 מצוין!');hide('wcNext');return;}
+  S.answered=false;const q=wcPool[0];curWC=q;
+  set('wcNum','השלמת מילים');document.getElementById('wcWord').textContent=q.display;
+  set('wcClue','רמז: '+q.clue);set('wcFb','');cls('wcFb','fb');hide('wcNext');
+  const g=document.getElementById('wcAns');g.innerHTML='';
+  shuf([...q.options]).forEach(o=>{const b=mk('button','mc-btn',o);b.onclick=()=>checkWC(o,b);g.appendChild(b);});
+  renderStreak('stkWC');
+  if(PREVIEW) show('wcNext');
+}
+function checkWC(sel,btn){
+  if(S.answered)return;S.answered=true;
+  const ok=sel===curWC.missing;
+  qa('#wcAns .mc-btn',b=>{b.disabled=true;if(b.textContent===curWC.missing)b.classList.add('correct');});
+  if(ok){btn.classList.add('correct');S.streak=Math.min(S.streak+1,5);addScore(curWC.pts);wcPool.shift();set('wcFb',rndMsg());cls('wcFb','fb ok');}
+  else{btn.classList.add('wrong');S.streak=0;set('wcFb','לא נכון... האות: '+curWC.missing+' 💪');cls('wcFb','fb err');}
+  renderStreak('stkWC');saveS();show('wcNext');
+}
+function nextWC(){if(PREVIEW&&wcPool.length)wcPool.shift();loadWC();}
+
+// PICTURE WORD
+const PW_Q=[
+  {emoji:'🐕',answer:'כֶּלֶב',options:['כֶּלֶב','חָתוּל','דָּג','פִּיל'],pts:6},
+  {emoji:'🐱',answer:'חָתוּל',options:['כֶּלֶב','חָתוּל','דָּג','עוֹף'],pts:6},
+  {emoji:'☀️',answer:'שֶׁמֶשׁ',options:['יָרֵחַ','שֶׁמֶשׁ','כּוֹכָב','עָנָן'],pts:6},
+  {emoji:'🏠',answer:'בַּיִת',options:['בַּיִת','חֶדֶר','דֶּלֶת','גַּג'],pts:6},
+  {emoji:'🌳',answer:'עֵץ',options:['פֶּרַח','עֵץ','דֶּשֶׁא','עָלֶה'],pts:6},
+  {emoji:'🐟',answer:'דָּג',options:['דָּב','דָּג','צִפּוֹר','צָב'],pts:6},
+  {emoji:'📚',answer:'סֵפֶר',options:['סֵפֶר','עֵט','מַחְבֶּרֶת','כִּסֵּא'],pts:6},
+  {emoji:'⚽',answer:'כַּדּוּר',options:['כַּדּוּר','שַׁעַר','מִגְרָשׁ','גּוֹל'],pts:6},
+  {emoji:'🌈',answer:'קֶשֶׁת',options:['גֶּשֶׁם','עָנָן','קֶשֶׁת','שֶׁמֶשׁ'],pts:6},
+  {emoji:'🍎',answer:'תַּפּוּחַ',options:['תַּפּוּחַ','בַּנָּנָה','תַּפּוּז','אֲגָס'],pts:6},
+  {emoji:'🚗',answer:'מְכוֹנִית',options:['מְכוֹנִית','אוֹטוֹבּוּס','אוֹפַנַּיִם','רַכֶּבֶת'],pts:6},
+  {emoji:'✈️',answer:'מָטוֹס',options:['מָטוֹס','סְפִינָה','רַכֶּבֶת','מְכוֹנִית'],pts:6},
+  {emoji:'🌙',answer:'יָרֵחַ',options:['שֶׁמֶשׁ','יָרֵחַ','כּוֹכָב','עָנָן'],pts:6},
+  {emoji:'🎂',answer:'עוּגָּה',options:['עוּגָּה','לֶחֶם','עוּגִיָּה','פִּיצָּה'],pts:6},
+  {emoji:'🌸',answer:'פֶּרַח',options:['פֶּרַח','עֵץ','דֶּשֶׁא','גַּן'],pts:6},
+];
+let pwPool=[],curPW=null;
+function startPW(){pwPool=shuf([...PW_Q]);showScr('pwScr');loadPW();}
+function loadPW(){
+  if(!pwPool.length){set('pwFb','🎉 מצוין!');hide('pwNext');return;}
+  S.answered=false;const q=pwPool[0];curPW=q;
+  set('pwNum','תמונה → מילה');set('pwEmoji',q.emoji);set('pwFb','');cls('pwFb','fb');hide('pwNext');
+  const g=document.getElementById('pwAns');g.innerHTML='';
+  shuf([...q.options]).forEach(o=>{const b=mk('button','mc-btn',o);b.onclick=()=>checkPW(o,b);g.appendChild(b);});
+  renderStreak('stkPW');
+  if(PREVIEW) show('pwNext');
+}
+function checkPW(sel,btn){
+  if(S.answered)return;S.answered=true;
+  const ok=sel===curPW.answer;
+  qa('#pwAns .mc-btn',b=>{b.disabled=true;if(b.textContent===curPW.answer)b.classList.add('correct');});
+  if(ok){btn.classList.add('correct');S.streak=Math.min(S.streak+1,5);addScore(curPW.pts);pwPool.shift();set('pwFb',rndMsg());cls('pwFb','fb ok');}
+  else{btn.classList.add('wrong');S.streak=0;set('pwFb','לא נכון... '+curPW.answer+' 💪');cls('pwFb','fb err');}
+  renderStreak('stkPW');saveS();show('pwNext');
+}
+function nextPW(){if(PREVIEW&&pwPool.length)pwPool.shift();loadPW();}
+
+// OPPOSITES
+const OPP_Q=[
+  {word:'גָּדוֹל',answer:'קָטָן',options:['קָטָן','גָּבוֹהַּ','רָחוֹק','כָּבֵד'],pts:6},
+  {word:'חַם',answer:'קַר',options:['קַר','חָם','לַח','יָבֵשׁ'],pts:6},
+  {word:'יוֹם',answer:'לַיְלָה',options:['לַיְלָה','עֶרֶב','בֹּקֶר','צָהֳרַיִם'],pts:6},
+  {word:'שָׂמֵחַ',answer:'עָצוּב',options:['עָצוּב','כּוֹעֵס','פּוֹחֵד','עָיֵף'],pts:6},
+  {word:'לָבָן',answer:'שָׁחוֹר',options:['שָׁחוֹר','אָדֹם','כָּחֹל','יָרֹק'],pts:6},
+  {word:'מָהֵר',answer:'לָאַט',options:['לָאַט','רָחוֹק','קָרוֹב','גָּבוֹהַּ'],pts:6},
+  {word:'פָּתוּחַ',answer:'סָגוּר',options:['סָגוּר','שָׁבוּר','חָדָשׁ','יָשָׁן'],pts:6},
+  {word:'רָחוֹק',answer:'קָרוֹב',options:['קָרוֹב','גָּדוֹל','קָטָן','חָזָק'],pts:6},
+  {word:'חָזָק',answer:'חָלָשׁ',options:['חָלָשׁ','גָּדוֹל','גָּבוֹהַּ','כָּבֵד'],pts:6},
+  {word:'חָדָשׁ',answer:'יָשָׁן',options:['יָשָׁן','אַחֵר','שׁוֹנֶה','דּוֹמֶה'],pts:6},
+  {word:'נָקִי',answer:'מְלֻכְלָךְ',options:['מְלֻכְלָךְ','רָטוֹב','יָבֵשׁ','שָׁבוּר'],pts:7},
+  {word:'גָּבוֹהַּ',answer:'נָמוּךְ',options:['נָמוּךְ','קָטָן','רָזֶה','קָצָר'],pts:6},
+  {word:'אָהַב',answer:'שָׂנֵא',options:['שָׂנֵא','פָּחַד','בָּכָה','צָחַק'],pts:7},
+  {word:'עוֹלֶה',answer:'יוֹרֵד',options:['יוֹרֵד','עוֹמֵד','רָץ','הוֹלֵךְ'],pts:6},
+  {word:'עָלָה',answer:'יָרַד',options:['יָרַד','רָץ','עָמַד','יָשַׁב'],pts:6},
+];
+let oppPool=[],curOpp=null;
+function startOpp(){oppPool=shuf([...OPP_Q]);showScr('oppScr');loadOpp();}
+function loadOpp(){
+  if(!oppPool.length){set('oppFb','🎉 מצוין!');hide('oppNext');return;}
+  S.answered=false;const q=oppPool[0];curOpp=q;
+  set('oppNum','הפכים');set('oppWord',q.word);set('oppFb','');cls('oppFb','fb');hide('oppNext');
+  const g=document.getElementById('oppAns');g.innerHTML='';
+  shuf([...q.options]).forEach(o=>{const b=mk('button','mc-btn',o);b.onclick=()=>checkOpp(o,b);g.appendChild(b);});
+  renderStreak('stkOpp');
+  if(PREVIEW) show('oppNext');
+}
+function checkOpp(sel,btn){
+  if(S.answered)return;S.answered=true;
+  const ok=sel===curOpp.answer;
+  qa('#oppAns .mc-btn',b=>{b.disabled=true;if(b.textContent===curOpp.answer)b.classList.add('correct');});
+  if(ok){btn.classList.add('correct');S.streak=Math.min(S.streak+1,5);addScore(curOpp.pts);oppPool.shift();set('oppFb',rndMsg());cls('oppFb','fb ok');}
+  else{btn.classList.add('wrong');S.streak=0;set('oppFb','לא נכון... '+curOpp.answer+' 💪');cls('oppFb','fb err');}
+  renderStreak('stkOpp');saveS();show('oppNext');
+}
+function nextOpp(){if(PREVIEW&&oppPool.length)oppPool.shift();loadOpp();}
+
+// ENGLISH
+// ══════════════════════════════════════════════════════
+//  ENGLISH — Simple Letter Learning (Grade 1)
+// ══════════════════════════════════════════════════════
+// Each letter: letter, name (how to say it), emoji, word
+const LETTERS=[
+  {l:'A',name:'Ay',heb:'אֵיי',emoji:'🍎',word:'Apple'},
+  {l:'B',name:'Bee',heb:'בִּי',emoji:'🐻',word:'Bear'},
+  {l:'C',name:'See',heb:'סִי',emoji:'🐱',word:'Cat'},
+  {l:'D',name:'Dee',heb:'דִּי',emoji:'🐶',word:'Dog'},
+  {l:'E',name:'Ee',heb:'אִי',emoji:'🐘',word:'Elephant'},
+  {l:'F',name:'Ef',heb:'אֶף',emoji:'🐸',word:'Frog'},
+  {l:'G',name:'Jee',heb:"ג'ִי",emoji:'🦒',word:'Giraffe'},
+  {l:'H',name:'Aych',heb:'אֵיי֒צ',emoji:'🐴',word:'Horse'},
+  {l:'I',name:'Eye',heb:'אַי',emoji:'🍦',word:'Ice cream'},
+  {l:'J',name:'Jay',heb:"ג'ֵיי",emoji:'🃏',word:'Joker'},
+  {l:'K',name:'Kay',heb:'קֵיי',emoji:'🔑',word:'Key'},
+  {l:'L',name:'El',heb:'אֶל',emoji:'🦁',word:'Lion'},
+  {l:'M',name:'Em',heb:'אֶם',emoji:'🌙',word:'Moon'},
+  {l:'N',name:'En',heb:'אֶן',emoji:'🌃',word:'Night'},
+  {l:'O',name:'Oh',heb:'אוֹ',emoji:'🐙',word:'Octopus'},
+  {l:'P',name:'Pee',heb:'פִּי',emoji:'🍕',word:'Pizza'},
+  {l:'Q',name:'Kyu',heb:'קְיוּ',emoji:'👑',word:'Queen'},
+  {l:'R',name:'Ar',heb:'אָר',emoji:'🌹',word:'Rose'},
+  {l:'S',name:'Es',heb:'אֶס',emoji:'☀️',word:'Sun'},
+  {l:'T',name:'Tee',heb:'טִי',emoji:'🐯',word:'Tiger'},
+  {l:'U',name:'Yu',heb:'יוּ',emoji:'☂️',word:'Umbrella'},
+  {l:'V',name:'Vee',heb:'וִי',emoji:'🎻',word:'Violin'},
+  {l:'W',name:'Double-U',heb:'דַּאבְּל-יוּ',emoji:'🐋',word:'Whale'},
+  {l:'X',name:'Ex',heb:'אֶקְס',emoji:'🎸',word:'Xylophone'},
+  {l:'Y',name:'Why',heb:'וַואי',emoji:'🪀',word:'Yo-yo'},
+  {l:'Z',name:'Zee',heb:'זִי',emoji:'🦓',word:'Zebra'},
+];
+
+// Generate distractors for a given correct item
+function engDistractors(correctIdx, field, count=3){
+  const pool=LETTERS.filter((_,i)=>i!==correctIdx);
+  const shufPool=shuf([...pool]);
+  return shufPool.slice(0,count).map(x=>x[field]);
+}
+
+let engPool=[],curEQ=null,engType='';
+
+function startEng(type){
+  engType=type;
+  // build question pool — all 26 letters, shuffled
+  engPool=shuf(LETTERS.map((lt,i)=>({...lt,idx:i})));
+  const lbl={see_name:'A → שם',name_see:'שם → A',pic_letter:'🖼️ → A'};
+  const badge={see_name:'🔡 A → "Ay"',name_see:'🔤 "Ay" → A',pic_letter:'🖼️ תמונה → A'};
+  set('engBadge',badge[type]);
+  showScr('engScr');
+  loadEQ();
+}
+
+function loadEQ(){
+  if(!engPool.length){
+    set('engFb','🎉 Amazing! All letters done!');
+    cls('engFb','fb ok');
+    hide('engNext');
+    return;
+  }
+  S.answered=false;
+  const q=engPool[0]; curEQ=q;
+  const num=26-engPool.length+1;
+  set('engNum','Letter '+num+' of 26');
+  set('engFb',''); cls('engFb','fb'); hide('engNext');
+
+  const big=document.getElementById('engBigDisplay');
+  const sub=document.getElementById('engSub');
+  const inst=document.getElementById('engInstruction');
+  const g=document.getElementById('engAns'); g.innerHTML='';
+
+  if(engType==='see_name'){
+    // Show big letter, pick the name — options show "Ay / אֵיי"
+    big.textContent=q.l+' / '+q.l.toLowerCase();
+    big.style.fontSize='5.5rem';
+    sub.innerHTML=q.emoji+' <span style="direction:ltr;font-size:.95rem">'+q.word+'</span>';
+    inst.textContent='מה שם האות הזאת?';
+    // Options: "Ay / אֵיי"
+    const wrongLetters=engDistractors(q.idx,'l').map(wl=>LETTERS.find(x=>x.l===wl));
+    const opts=shuf([q,...wrongLetters]);
+    opts.forEach(o=>{
+      const b=document.createElement('button');
+      b.className='mc-btn';
+      b.style.cssText='direction:ltr;font-family:monospace;font-size:1.1rem;line-height:1.4';
+      b.innerHTML='<span style="font-size:1.3rem;font-weight:900">'+o.name+'</span><br><span style="font-size:.95rem;direction:rtl;font-family:Heebo,sans-serif;font-weight:400">'+o.heb+'</span>';
+      b.dataset.val=o.name;
+      b.onclick=()=>checkEQ(o.name,b,q.name);
+      g.appendChild(b);
+    });
+
+  }else if(engType==='name_see'){
+    // Show name + Hebrew, pick the letter
+    big.style.fontSize='2.8rem';
+    big.innerHTML='<span style="direction:ltr">'+q.name+'</span><br><span style="font-size:2rem;font-family:Heebo,sans-serif;color:var(--a3)">'+q.heb+'</span>';
+    sub.innerHTML=q.emoji+' <span style="direction:ltr;font-size:.95rem">'+q.word+'</span>';
+    inst.textContent='איזו אות נקראת כך?';
+    const opts=shuf([q.l,...engDistractors(q.idx,'l')]);
+    opts.forEach(o=>{
+      const b=mk('button','mc-btn',o+' / '+o.toLowerCase());
+      b.style.cssText='direction:ltr;font-family:monospace;font-size:1.6rem;font-weight:900';
+      b.dataset.val=o;
+      b.onclick=()=>checkEQ(o,b,q.l);
+      g.appendChild(b);
+    });
+
+  }else{
+    // pic_letter — show big emoji, pick the letter
+    big.textContent=q.emoji;
+    big.style.fontSize='7rem';
+    sub.innerHTML='<span style="direction:ltr;font-size:1rem">'+q.word+'</span>';
+    inst.textContent='באיזו אות מתחילה המילה?';
+    const opts=shuf([q.l,...engDistractors(q.idx,'l')]);
+    opts.forEach(o=>{
+      const b=mk('button','mc-btn',o+' / '+o.toLowerCase());
+      b.style.cssText='direction:ltr;font-family:monospace;font-size:1.6rem;font-weight:900';
+      b.dataset.val=o;
+      b.onclick=()=>checkEQ(o,b,q.l);
+      g.appendChild(b);
+    });
+  }
+  renderStreak('stkEng');
+  if(PREVIEW) show('engNext');
+}
+
+function checkEQ(sel,btn,correct){
+  if(S.answered)return; S.answered=true;
+  const ok=String(sel)===String(correct);
+  // mark correct
+  qa('#engAns .mc-btn',b=>{
+    b.disabled=true;
+    const val=b.dataset.val||b.textContent.split('/')[0].trim().split('\n')[0].trim();
+    if(val===correct) b.classList.add('correct');
+  });
+  if(ok){
+    btn.classList.add('correct');
+    S.streak=Math.min(S.streak+1,5);
+    addScore(5);
+    engPool.shift();
+    // Full info shown in feedback
+    set('engFb','⭐ '+correct+' — '+curEQ.name+' / '+curEQ.heb+' — '+curEQ.emoji+' '+curEQ.word+'!');
+    cls('engFb','fb ok');
+  }else{
+    btn.classList.add('wrong');
+    S.streak=0;
+    set('engFb','האות היא '+correct+' — '+curEQ.name+' / '+curEQ.heb+' — '+curEQ.emoji+' 💪');
+    cls('engFb','fb err');
+  }
+  renderStreak('stkEng'); saveS(); show('engNext');
+}
+function nextEng(){
+  if(PREVIEW && engPool.length) engPool.shift();
+  loadEQ();
+}
+
+// JUDAISM
+const JUD={
+  parasha:[
+    {emoji:'🌍',q:'בְּאֵיזֶה יוֹם בָּרָא אֱלֹהִים אֶת הָאוֹר?',a:'יום ראשון',opts:['יום ראשון','יום שני','יום שלישי','יום רביעי'],pts:6},
+    {emoji:'🌿',q:'מָה נִבְרָא בְּיוֹם הַשְּׁלִישִׁי?',a:'עצים ופרחים',opts:['דגים','עצים ופרחים','שמש וירח','בעלי חיים'],pts:6},
+    {emoji:'🌟',q:'מָה נִבְרָא בְּיוֹם הָרְבִיעִי?',a:'שמש וירח וכוכבים',opts:['שמש וירח וכוכבים','דגים ועופות','חיות','אדם'],pts:6},
+    {emoji:'🐟',q:'מָה נִבְרָא בְּיוֹם הַחֲמִישִׁי?',a:'דגים ועופות',opts:['דגים ועופות','חיות','אדם','עצים'],pts:6},
+    {emoji:'👤',q:'מָה נִבְרָא בְּיוֹם הַשִּׁשִּׁי?',a:'האדם',opts:['האדם','הדגים','העצים','השמש'],pts:6},
+    {emoji:'😴',q:'בְּאֵיזֶה יוֹם שָׁבַת אֱלֹהִים?',a:'יום שביעי',opts:['יום ראשון','יום שישי','יום שביעי','יום חמישי'],pts:6},
+    {emoji:'🌈',q:'מָה הַבְּרִית שֶׁנָּתַן אֱלֹהִים לְנֹחַ?',a:'לא יהיה מבול שוב',opts:['לא יהיה מבול שוב','יהיה גשם','יהיה שלג','יהיה שמש'],pts:7},
+    {emoji:'⭐',q:'אֵיפֹה צָוָּה אֱלֹהִים לְאַבְרָהָם לָלֶכֶת?',a:'לארץ כנען',opts:['לארץ כנען','למצרים','לבבל','לסיני'],pts:7},
+    {emoji:'🐑',q:'מָה אָמַר אֱלֹהִים לְאַבְרָהָם בְּמָקוֹם יִצְחָק?',a:'איל',opts:['כבש','איל','פרה','עז'],pts:7},
+    {emoji:'🪜',q:'מָה חָלַם יַעֲקֹב?',a:'סולם עד השמים',opts:['סולם עד השמים','ים גדול','כוכבים','חיות'],pts:7},
+    {emoji:'🌾',q:'כַּמָּה שָׁנִים עָבַד יַעֲקֹב לְלָבָן?',a:'עשרים שנה',opts:['שבע שנים','עשר שנים','עשרים שנה','שלוש שנים'],pts:7},
+    {emoji:'🔥',q:'בַּמָּה דִּבֵּר אֱלֹהִים אֶל מֹשֶׁה?',a:'סנה בוער',opts:['סנה בוער','ענן','קול','חלום'],pts:7},
+    {emoji:'🌊',q:'מָה קָרָה לַיָּם כְּשֶׁמֹּשֶׁה פָּשַׁט יָדוֹ?',a:'נבקע',opts:['נבקע','הפך לדם','הפך לקרח','נעלם'],pts:8},
+    {emoji:'💧',q:'מַה הָיְתָה הַמַּכָּה הָרִאשׁוֹנָה בְּמִצְרַיִם?',a:'דם',opts:['דם','צפרדע','כינים','ארבה'],pts:8},
+    {emoji:'📋',q:'עַל מָה נִכְתְּבוּ עֲשֶׂרֶת הַדִּבְּרוֹת?',a:'לוחות אבן',opts:['לוחות אבן','נייר','עץ','מתכת'],pts:8},
+  ],
+  holidays:[
+    {emoji:'🍎',q:'בְּאֵיזֶה חַג אוֹכְלִים תַּפּוּחַ בִּדְבַשׁ?',a:'ראש השנה',opts:['ראש השנה','סוכות','פסח','שבועות'],pts:6},
+    {emoji:'🕍',q:'מָה שֵׁם הַיּוֹם שֶׁמִּתְפַּלְּלִים וְצָמִים?',a:'יום כיפור',opts:['יום כיפור','ראש השנה','פסח','שבת'],pts:6},
+    {emoji:'🌿',q:'בְּאֵיזֶה חַג גָּרִים בַּסֻּכָּה?',a:'סוכות',opts:['סוכות','פסח','שבועות','חנוכה'],pts:6},
+    {emoji:'🕎',q:'כַּמָּה נֵרוֹת יֵשׁ בַּחֲנֻכִּיָּה?',a:'תשעה',opts:['שמונה','תשעה','שבעה','עשרה'],pts:7,hint:'הגבוה = שמש'},
+    {emoji:'🎭',q:'בְּאֵיזֶה חַג לּוֹבְשִׁים תַּחְפּוֹשֶׂת?',a:'פורים',opts:['פורים','חנוכה','פסח','סוכות'],pts:6},
+    {emoji:'🍷',q:'כַּמָּה כּוֹסוֹת שׁוֹתִים בְּלֵיל הַסֵּדֶר?',a:'ארבע',opts:['שתיים','שלוש','ארבע','חמש'],pts:7},
+    {emoji:'🌾',q:'בְּאֵיזֶה חַג אוֹכְלִים מַצּוֹת?',a:'פסח',opts:['פסח','סוכות','שבועות','פורים'],pts:6},
+    {emoji:'📜',q:'בְּאֵיזֶה חַג קָרְאוּ מְגִלַּת אֶסְתֵּר?',a:'פורים',opts:['פורים','חנוכה','פסח','שבועות'],pts:6},
+    {emoji:'🌸',q:'בְּאֵיזֶה חַג קִיבְּלָנוּ אֶת הַתּוֹרָה?',a:'שבועות',opts:['שבועות','פסח','סוכות','פורים'],pts:7},
+    {emoji:'🏘️',q:'בְּאֵיזֶה חַג אֵין לֶחֶם רָגִיל?',a:'פסח',opts:['פסח','חנוכה','פורים','שבועות'],pts:6},
+  ],
+  shabbat:[
+    {emoji:'🕯️',q:'כַּמָּה נֵרוֹת מַדְלִיקִים לְשַׁבָּת?',a:'שניים',opts:['אחד','שניים','שלושה','ארבעה'],pts:5},
+    {emoji:'🍞',q:'מָה שֵׁם הַלֶּחֶם הַמְּיֻחָד לְשַׁבָּת?',a:'חלה',opts:['חלה','פיתה','לחם','בגט'],pts:5},
+    {emoji:'🍷',q:'עַל מָה מְבָרְכִים בְּקִידּוּשׁ?',a:'יין',opts:['יין','מיץ','מים','חלב'],pts:5},
+    {emoji:'⭐',q:'מָתַי מַתְחֶלֶת שַׁבָּת?',a:'בערב שישי',opts:['בבוקר שישי','בערב שישי','בבוקר שבת','בצהריים שישי'],pts:6},
+    {emoji:'✨',q:'מָתַי נִגְמֶרֶת שַׁבָּת?',a:'מוצאי שבת',opts:['מוצאי שבת','בצהרי שבת','בבוקר שבת','בערב שבת'],pts:6},
+    {emoji:'🎶',q:'מָה שָׁרִים בְּהַתְחָלַת שַׁבָּת?',a:'שלום עליכם',opts:['שלום עליכם','הבה נגילה','לכה דודי','אל מלא רחמים'],pts:6},
+    {emoji:'🌿',q:'מָה מְרִיחִים בְּהַבְדָּלָה?',a:'בשמים',opts:['בשמים','פרחים','תפוח','קינמון'],pts:6},
+    {emoji:'🕯️',q:'מָה עוֹשִׂים בְּסוֹף שַׁבָּת?',a:'הבדלה',opts:['הבדלה','קידוש','תפילה','ברכה'],pts:6},
+  ],
+  values:[
+    {emoji:'❤️',q:'מָה מִצְוַת כִּבּוּד אַב וָאֵם?',a:'לכבד ולשמוע להורים',opts:['לכבד ולשמוע להורים','לאהוב חברים','לתת צדקה','ללמוד תורה'],pts:6},
+    {emoji:'🤝',q:'מָה פֵּרוּשׁ "וְאָהַבְתָּ לְרֵעֲךָ כָּמוֹךָ"?',a:'לאהוב את החבר כמו עצמך',opts:['לאהוב את החבר כמו עצמך','לתת מתנות','לשחק יחד','לאכול יחד'],pts:7},
+    {emoji:'💰',q:'מָה זֶה צְדָקָה?',a:'לתת לעניים',opts:['לתת לעניים','לקנות ממתקים','לשמוע להורים','ללמוד'],pts:6},
+    {emoji:'🙏',q:'מָתַי מִתְפַּלְּלִים שַׁחֲרִית?',a:'בבוקר',opts:['בבוקר','בצהריים','בערב','בלילה'],pts:5},
+    {emoji:'📖',q:'מָה שֵׁם הַסֵּפֶר הַקָּדוֹשׁ שֶׁלָּנוּ?',a:'התורה',opts:['התורה','הסידור','המשנה','הגמרא'],pts:5},
+    {emoji:'🌟',q:'כַּמָּה מִצְווֹת יֵשׁ בַּתּוֹרָה?',a:'תרי"ג — 613',opts:['עשר','מאה','תרי"ג — 613','אלף'],pts:8},
+    {emoji:'🕍',q:'מָה שֵׁם בֵּית הַתְּפִילָּה שֶׁלָּנוּ?',a:'בית כנסת',opts:['בית כנסת','בית ספר','בית מדרש','כנסת'],pts:5},
+    {emoji:'👐',q:'מָה זֶה גְּמִילוּת חֲסָדִים?',a:'לעזור לאחרים',opts:['לעזור לאחרים','לאכול טוב','ללמוד הרבה','לישון'],pts:6},
+    {emoji:'🤫',q:'מָה מִצְוַת שְׁמִירַת הַלָּשׁוֹן?',a:'לא לדבר רעה על אנשים',opts:['לא לדבר רעה על אנשים','לדבר בשקט','לא לצעוק','לא לשקר'],pts:7},
+    {emoji:'🌿',q:'מָה מִצְוַת שִׁמְחַת יוֹם טוֹב?',a:'לשמוח בחג',opts:['לשמוח בחג','לצום','ללבוש לבן','לתת מתנות'],pts:6},
+  ]
+};
+
+let judPool=[],curJQ=null;
+function goJudaism(){showScr('judScr');openJudIfApproved();}
+function approveJud(){
+  const v=document.getElementById('judCode').value.trim();
+  const m=document.getElementById('judMsg');
+  if(v===ADMIN_CODE){
+    S.judApproved=true;saveS();updateUI();
+    document.getElementById('judCode').value='';
+    if(m){m.textContent='✅ יהדות נפתחה!';m.className='adm-msg ok';}
+    openJudIfApproved();
+  }else{
+    if(m){m.textContent='❌ קוד שגוי';m.className='adm-msg err';}
+  }
+}
+function openJudIfApproved(){
+  if(S.judApproved){
+    document.getElementById('judLocked').style.display='none';
+    document.getElementById('judOpen').style.display='flex';
+  }
+}
+function startJud(type){
+  judPool=shuf([...JUD[type]]);
+  const lbl={parasha:'📜 פרשה',holidays:'🕍 חגים',shabbat:'🕯️ שבת',values:'❤️ ערכים'};
+  set('judBadge',lbl[type]);showScr('judGameScr');loadJQ();
+}
+function loadJQ(){
+  if(!judPool.length){set('judFb','🎉 כל הכבוד!');hide('judNext');return;}
+  S.answered=false;const q=judPool[0];curJQ=q;
+  set('judNum','שאלה ביהדות');set('judEmoji',q.emoji||'');set('judQTxt',q.q);set('judHint',q.hint||'');
+  set('judFb','');cls('judFb','fb');hide('judNext');
+  const g=document.getElementById('judAns');g.innerHTML='';
+  shuf([...q.opts]).forEach(o=>{const b=mk('button','mc-btn',o);b.onclick=()=>checkJQ(o,b);g.appendChild(b);});
+  renderStreak('stkJud');
+  if(PREVIEW) show('judNext');
+}
+function checkJQ(sel,btn){
+  if(S.answered)return;S.answered=true;
+  const ok=sel===curJQ.a;
+  qa('#judAns .mc-btn',b=>{b.disabled=true;if(b.textContent===curJQ.a)b.classList.add('correct');});
+  if(ok){btn.classList.add('correct');S.streak=Math.min(S.streak+1,5);addScore(curJQ.pts);judPool.shift();set('judFb',rndMsg());cls('judFb','fb ok');}
+  else{btn.classList.add('wrong');S.streak=0;set('judFb','לא נכון... '+curJQ.a+' 💪');cls('judFb','fb err');}
+  renderStreak('stkJud');saveS();show('judNext');
+}
+function nextJud(){
+  if(PREVIEW && judPool.length) judPool.shift();
+  loadJQ();
+}
+
+// PARENT VIEW
+function openParentView(inpId,msgId){
+  const el=document.getElementById(inpId);if(!el)return;
+  const v=el.value.trim();
+  const m=document.getElementById(msgId);
+  if(v!==ADMIN_CODE){
+    if(m){m.textContent='❌ קוד שגוי';m.className='adm-msg err';}
+    return;
+  }
+  el.value='';
+  if(m){m.textContent='';m.className='adm-msg';}
+  document.getElementById('ap1').classList.remove('open');
+  buildParentView();
+  showScr('parentScr');
+}
+function switchParentTab(tab){
+  ['stats','prizes','stories'].forEach(t=>{
+    document.getElementById('ptab-'+t).style.display = t===tab ? 'block' : 'none';
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+  });
+  if(tab==='prizes') buildPrizesList();
+}
+
+function buildPrizesList(){
+  const list=document.getElementById('prizesList');
+  if(!list)return;
+  list.innerHTML='';
+  const prizes=getPrizes();
+  prizes.forEach((p,i)=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--card2);border-radius:9px';
+    row.innerHTML=`<span style="font-size:1.1rem">${p.match(/[\u{1F300}-\u{1FFFF}]|[\u2600-\u27BF]/u)?p.match(/[\u{1F300}-\u{1FFFF}]|[\u2600-\u27BF]/u)[0]:''}</span><span style="flex:1;font-size:.88rem;color:var(--txt)">${p}</span><button onclick="removePrize(${i})" style="background:rgba(255,118,117,.15);border:1px solid var(--red);color:var(--red);cursor:pointer;font-size:.85rem;padding:3px 9px;border-radius:7px;font-family:Heebo,sans-serif">✕</button>`;
+    list.appendChild(row);
+  });
+}
+
+function addPrize(){
+  const inp=document.getElementById('newPrizeInp');
+  const val=inp.value.trim();
+  if(!val)return;
+  if(!S.customPrizes||!S.customPrizes.length) S.customPrizes=[...DEFAULT_PRIZES];
+  S.customPrizes.push(val);
+  inp.value='';
+  saveS();buildPrizesList();
+}
+
+function removePrize(idx){
+  if(!S.customPrizes||!S.customPrizes.length) S.customPrizes=[...DEFAULT_PRIZES];
+  S.customPrizes.splice(idx,1);
+  if(!S.customPrizes.length) S.customPrizes=[...DEFAULT_PRIZES];
+  saveS();buildPrizesList();
+}
+
+function resetPrizesToDefault(){
+  S.customPrizes=[];
+  saveS();buildPrizesList();
+}
+
+function buildParentView(){
+  switchParentTab('stats');
+  const stDone=Object.keys(S.storyDone).length,stTotal=STORIES.length;
+  document.getElementById('ptab-stats').innerHTML=`
+    <div style="font-size:.75rem;font-weight:700;color:var(--acc);margin-bottom:10px">📊 סטטיסטיקות — ${PLAYER}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+      ${[['נקודות נוכחיות',S.score,'var(--acc)'],['סה"כ נקודות',S.total,'var(--a3)'],['פרסים',S.prizes.length,'var(--a4)'],['סיפורים הושלמו',stDone,'var(--grn)'],['סיפורים נותרו',stTotal-stDone,'var(--mut)'],['תרגילי חשבון',S.mathN||0,'var(--acc)']].map(([lbl,val,col])=>`<div style="background:var(--card2);border-radius:10px;padding:10px"><div style="font-size:1.4rem;font-weight:900;color:${col}">${val}</div><div style="font-size:.62rem;color:var(--mut)">${lbl}</div></div>`).join('')}
+    </div>
+    ${S.prizes.length?`<div style="margin-top:8px;font-size:.75rem;color:var(--mut)">🎁 פרסים: <span style="color:var(--acc)">${S.prizes.join(' • ')}</span></div>`:''}
+    <div style="margin-top:8px;font-size:.75rem;color:${S.judApproved?'var(--grn)':'var(--a2)'}">✡️ יהדות: ${S.judApproved?'✅ מאושר':'🔒 לא מאושר'}</div>`;
+  // Stories list
+  const stEl=document.getElementById('ptab-stories');
+  stEl.innerHTML=`<div style="font-size:.75rem;font-weight:700;color:var(--a4);margin-bottom:8px">📖 סיפורים (${stDone}/${stTotal})</div>`;
+  const byTopic={};STORIES.forEach(s=>{if(!byTopic[s.topic])byTopic[s.topic]=[];byTopic[s.topic].push(s);});
+  Object.entries(byTopic).forEach(([topic,stories])=>{
+    const ti=RTOPICS.find(t=>t.topic===topic)||{icon:'📖',name:topic};
+    stEl.innerHTML+=`<div style="font-size:.7rem;font-weight:700;color:var(--mut);margin:8px 0 3px">${ti.icon} ${ti.name}</div>`;
+    stories.forEach(s=>{
+      const done=S.storyDone[s.id];
+      const ans=S.storyAnswers&&S.storyAnswers[s.id];
+      const ansCount=ans?Object.keys(ans).length:0;
+      stEl.innerHTML+=`<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--card2);border-radius:7px;margin-bottom:3px">
+        <span>${done?'✅':ansCount?'🔄':'⬜'}</span>
+        <span style="font-size:.78rem;color:${done?'var(--grn)':ansCount?'var(--acc)':'var(--txt)'}">${s.title}</span>
+        ${ansCount&&!done?`<span style="font-size:.65rem;color:var(--mut);margin-right:auto">${ansCount}/${s.qs.length} שאלות</span>`:''}
+      </div>`;
+    });
+  });
+  stEl.innerHTML+=`<div style="margin-top:12px;padding:10px;background:rgba(247,201,72,.08);border:1px solid rgba(247,201,72,.2);border-radius:10px;font-size:.76rem;color:var(--acc);line-height:1.7">
+    💡 <strong>להוספת תוכן:</strong> פנה לשיחה עם Claude.<br>
+    <span style="color:var(--mut)">איפוס נקודות <strong>לא</strong> מוחק התקדמות.</span>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════
+function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function cls(id,c){const e=document.getElementById(id);if(e)e.className=c;}
+function show(id){const e=document.getElementById(id);if(e)e.style.display='block';}
+function hide(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+function mk(tag,cls,txt){const e=document.createElement(tag);e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
+function qa(sel,fn){document.querySelectorAll(sel).forEach(fn);}
+function rndMsg(){return['מצוין! 🌟','כל הכבוד! 🎉','וואו! 🔥','יפה מאוד! ⭐','אלוף! 💪','מדהים! 😍'][Math.floor(Math.random()*6)];}
+
+// HERO ROTATION
+const HE=['🦸‍♂️','⚽','🎮','🌟','🏆','💪','🚀','⚡','📖','🔢','⛏️','🌈','✡️'];
+let hi=0;setInterval(()=>{hi=(hi+1)%HE.length;const e=document.getElementById('heroEmoji');if(e)e.textContent=HE[hi];},3000);
+
+// SW
+if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+// INIT
+const lp=localStorage.getItem('gab5_lastPlayer');
+if(lp){document.getElementById('nameInp').value=lp;}
+document.getElementById('nameInp').addEventListener('keydown',e=>{if(e.key==='Enter')startWithName();});
+updateUI();
+
+</script>
+</body>
+</html>

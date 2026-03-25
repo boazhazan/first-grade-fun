@@ -1,0 +1,26 @@
+{
+  "name": "לומד וגדל 🌟",
+  "short_name": "לומד וגדל",
+  "description": "משחק למידה לכיתה א׳ — חשבון, קריאה, אנגלית ויהדות",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#f7c948",
+  "orientation": "portrait",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
