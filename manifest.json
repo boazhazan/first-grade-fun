@@ -1,9 +1,8 @@
 {
-  "name": "כיתה א׳ שלי",
-  "short_name": "כיתה א׳",
-  "description": "Learning app for grade 1",
-  "start_url": "/first-grade-fun/index.html",
-  "scope": "/first-grade-fun/",
+  "name": "כיתה א שלי",
+  "short_name": "כיתה א",
+  "description": "משחק למידה לכיתה א",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f0f1a",
   "theme_color": "#f7c948",
@@ -15,25 +14,13 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
